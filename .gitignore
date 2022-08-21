@@ -1,4 +1,7 @@
 *.swp
 *.swo
-data/jhu/COVID-19
-wp6379583.jpg
+inputs/faa/
+inputs/jhu/
+inputs/openflights/
+process_inputs/__pycache__/
+process_inputs/jhu.py

@@ -7,3 +7,4 @@ def get_project_root() -> Path:
 def get_inputs_dir() -> Path:
     root = get_project_root()
     return root.joinpath("inputs")
+
