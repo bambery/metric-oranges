@@ -1,4 +1,5 @@
 *.swp
 *.swo
-process_inputs/__pycache__/
+inputs/
+**/__pycache__/
 process_inputs/jhu.py

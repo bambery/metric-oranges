@@ -17,3 +17,6 @@ US_STATE_FIPS = { 'AL': '01', 'AK': '02', 'AZ': '04', 'AR': '05', 'CA': '06', 'C
 FIPS_US_STATE = {v: k for k, v in US_STATE_FIPS.items()}
 
 ALL_US_FIPS = US_STATE_FIPS.values()
+
+def convert_comma_to_under(s):
+    return s.replace(", ", "_")
