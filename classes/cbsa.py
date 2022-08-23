@@ -1,6 +1,6 @@
 class Cbsa:
 
-    # list of all Cbsas
+    # list of all CBSAs by code
     collection = {}
 
     def __init__(self, code, name, msa_designation, fips = None):
