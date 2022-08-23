@@ -10,6 +10,7 @@ class Cbsa:
         self.fips = set()
         if fips:
             self.fips.add(fips) # python wants to turn a string into a list of chars >:(, can't initialize with a string
+        self.airports = set()
         
     def __repr__(self):
         return f'Cbsa("{self.code}", "{self.name}", "{self.msa_designation}", fips: {self.fips})'
