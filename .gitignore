@@ -1,7 +1,5 @@
 *.swp
 *.swo
-inputs/faa/
-inputs/jhu/
-inputs/openflights/
+inputs/
 process_inputs/__pycache__/
 process_inputs/jhu.py
