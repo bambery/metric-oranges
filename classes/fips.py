@@ -6,16 +6,15 @@ class Fips:
     @classmethod
     def get_code(fips_code):
         if fips_code in collection:
-            return collection[fips_code]
+            return collection[fips_code].cbsa
         else: 
             return fips_code
 
-    def __init__(self, code, name, state, cbsa = None, cbsa_central = None):
+    def __init__(self, code, county, state, cbsa = None):
         self.code = code
-        self.name = name
+        self.county = county 
         self.state = state
         self.cbsa = cbsa
-        self.cbsa_central = cbsa_central
 
     def __repr__(self):
-        return f'FIPS({self.code}: {self.name}, {self.state}, cbsa: {self.cbsa}, cbsa central: {self.cbsa_central})'
+        return f'FIPS({self.code}: {self.county}, {self.state}, cbsa: {self.cbsa})'
