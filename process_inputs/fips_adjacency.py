@@ -25,6 +25,3 @@ def build_fips_adjacency():
             else: # there is no fips in col 1 and we are in the middle of assigning edges
                 edges[curr].append(int(row[3]))
     return edges 
-
-
-print("you imported a file")

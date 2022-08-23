@@ -15,6 +15,7 @@ class Fips:
         self.county = county 
         self.state = state
         self.cbsa = cbsa
+        self.airports = set()
 
     def __repr__(self):
         return f'FIPS({self.code}: {self.county}, {self.state}, cbsa: {self.cbsa})'

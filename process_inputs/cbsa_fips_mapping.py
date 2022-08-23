@@ -23,18 +23,18 @@ file_path_cbsa_list1 = inputs.joinpath("census", "list1_2015", "list1.xls")
 
 def build_CBSA_maps(): 
     def convert_list1_to_csv():
-        def micro_metro(s):
-            if s.startswith("Micro"):
+        def micro_metro(designation):
+            if designation.startswith("Micro"):
                 return "Micro"
             else:
                 return "Metro"
-        def state_abbreviation(s):
-            s = s.upper()
-            if s in helpers.US_STATES:
-                return helpers.US_STATES[s]
+        def state_abbreviation(abbr):
+            abbr = abbr.upper()
+            if abbr in helpers.US_STATES:
+                return helpers.US_STATES[abbr]
             return None 
-        def replace_cbsa_comma(s):
-            return s.replace(", ", "_")
+        def replace_cbsa_comma(cbsa_name):
+            return cbsa_name.replace(", ", "_")
 
 
         cbsas = pd.read_excel(
@@ -48,6 +48,7 @@ def build_CBSA_maps():
                 converters={ "Metro/Micro": micro_metro, "State": state_abbreviation, "CBSA Name": replace_cbsa_comma },
                 )
 
+        # optionally, write to temp file and read back in line by line
         return cbsas.to_csv(None, index = False, header = False)
 
     mycsv = convert_list1_to_csv() 
@@ -74,6 +75,4 @@ def build_CBSA_maps():
                 # create new CBSA entry
                 mycbsa = Cbsa(code, name, msa, full_fips)
                 Cbsa.collection[code] = mycbsa
-        else:
-            print("the fps state code ", fips_state, " is not part of the 50 US states")
     return (fips_cbsa, county_to_cbsa)

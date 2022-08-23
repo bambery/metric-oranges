@@ -32,12 +32,49 @@ def build_fips_maps():
 
     # the place names in the place-cbsa file are all appended with a word which I can find no list nor definition of. Places that have the word "City" as part of their name have the word "city" (in lower case) appended to the end anyway.
     # there are 5 cities in the US named "Lynchburg" in MS, OH, SC, TN, and VA, and one named "Lynch City" in Kentucky. I cannot. 
-    def strip_ending(place):
+
+    # should be refactored. Check if last item is all lowercase or CDP. if yes, pop, repeat
+    def normalize_name(place):
+
+        if place == "Lexington-Fayette": 
+            return "LEXINGTON" # airport is named after truncated county name
+        elif place == "Hartsville-Trousdale": # airport named after county 
+            return place.upper()
+        elif place == "Louisville-Jefferson County (balance)": # airport is named after truncated county name
+            return "LOUISVILLE"
+        elif place == "Butte-Silver Bow (balance)":
+            return "BUTTE"
+        elif place == "Nashville-Davidson (balance)":
+            return "NASHVILLE"
+
         words = place.split(" ")
         last = words.pop()
         if last == "(part)":
             words.pop()
+        elif last == "(balance)":
+            second_to_last = len(words)-1
+            if words[second_to_last].islower() or words[second_to_last] == "CDP": 
+                words.pop()
+        elif len(words) > 1:
+            second_to_last = len(words)-1
+            if words[second_to_last] == "and":
+                words.pop()
+                words.pop()
+
+        try:
+            words = list(map(lambda word: word.upper(), words))
+            loc = words.index("ST.") if "ST." in words else -1
+        except:
+            print("theres no words??")
+            breakpoint()
+        if loc > -1:
+            words[loc] = "ST"
+
         return " ".join(words)
+    
+    def state_places(state):
+        return {key for key in place_cbsa.keys() if key.startswith(state)}
+
 
     places = convert_place_cbsa_to_csv()
 
@@ -50,8 +87,17 @@ def build_fips_maps():
         fips_state, state_name, place_name, fips_county, county_name, cbsa_code = place_info 
 
         full_fips = fips_state + fips_county 
+
+        if place_name == "St. Cloud city (part)" and fips_county in ['009', '145']:
+            continue # 3 different places in MN named this, with different FIPS and CBSAs. I am choosing the one with the airport I want
+        place_name = normalize_name(place_name)
+
         myfips = Fips(full_fips, county_name, state_name, cbsa_code) 
 
         Fips.collection[full_fips] = myfips
-        place_cbsa[strip_ending(place_name)] = cbsa_code 
+
+        state_place = state_name + "_" + place_name
+        if state_place in place_cbsa:
+            continue # choose the first instance of ("part") and skip the rest.
+        place_cbsa[state_place] = { "cbsa": cbsa_code, "fips": full_fips }
     return place_cbsa
