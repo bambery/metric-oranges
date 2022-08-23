@@ -31,12 +31,9 @@ def build_fips_maps():
         return places.to_csv(None, index=False, header=False)
 
     # the place names in the place-cbsa file are all appended with a word which I can find no list nor definition of. Places that have the word "City" as part of their name have the word "city" (in lower case) appended to the end anyway.
-    # there are 2 "places" with commas, neither have airports
     # there are 5 cities in the US named "Lynchburg" in MS, OH, SC, TN, and VA, and one named "Lynch City" in Kentucky. I cannot. 
-    def strip_ending(s):
-        words = s.split(" ")
-        if len(words) > 6: return ""
-
+    def strip_ending(place):
+        words = place.split(" ")
         last = words.pop()
         if last == "(part)":
             words.pop()
@@ -47,11 +44,11 @@ def build_fips_maps():
     place_cbsa = {}
 
     for row in places.splitlines():
-        try:
-            fips_state, state_name, place_name, fips_county, county_name, cbsa_code = row.split(",") 
-        except:
-            print("u inside")
-            breakpoint()
+        place_info = row.split(",") # two "places" have commas in their name, neither have airports
+        if len(place_info) > 6:
+            continue
+        fips_state, state_name, place_name, fips_county, county_name, cbsa_code = place_info 
+
         full_fips = fips_state + fips_county 
         myfips = Fips(full_fips, county_name, state_name, cbsa_code) 
 
