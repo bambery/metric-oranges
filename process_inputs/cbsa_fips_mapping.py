@@ -31,7 +31,7 @@ def build_CBSA_maps():
         def state_abbreviation(abbr):
             abbr = abbr.upper()
             if abbr in helpers.US_STATES:
-                return helpers.US_STATES[s]
+                return helpers.US_STATES[abbr]
             return None 
         def replace_cbsa_comma(cbsa_name):
             return cbsa_name.replace(", ", "_")
@@ -75,6 +75,4 @@ def build_CBSA_maps():
                 # create new CBSA entry
                 mycbsa = Cbsa(code, name, msa, full_fips)
                 Cbsa.collection[code] = mycbsa
-        else:
-            print("the fps state code ", fips_state, " is not part of the 50 US states")
     return (fips_cbsa, county_to_cbsa)
