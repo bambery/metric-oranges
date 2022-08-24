@@ -13,7 +13,7 @@ inputs = utils.get_inputs_dir()
 file_path_fips_adjacency = inputs.joinpath("census", "county_adjacency.txt")
 
 def build_fips_adjacency():
-    edges = {}
+    adjacent = {}
     with open(file_path_fips_adjacency, encoding='cp1252', newline='') as file:
         reader = csv.reader(file, delimiter='\t')
         for row in reader:
@@ -21,7 +21,7 @@ def build_fips_adjacency():
                 break
             elif row[1]: # if there is an entry in col 1, then this is begins a new edges entry 
                 curr = int(row[1])
-                edges[curr] = []
+                ajacent[curr] = set() 
             else: # there is no fips in col 1 and we are in the middle of assigning edges
-                edges[curr].append(int(row[3]))
-    return edges 
+                adjacent[curr].append(int(row[3]))
+    return adjacent 

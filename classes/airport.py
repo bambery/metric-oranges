@@ -1,6 +1,6 @@
 import shared.helpers as helpers
 
-# there are 368 NPIAS hub-ranked airports from 2017-2021. I omit one, "Block Is;and" in RI, for a total of 367.
+# there are 368 NPIAS hub-ranked airports from 2017-2021. I omit one, "Block Island" in RI, for a total of 367.
 
 class Airport:
     # key is locid
