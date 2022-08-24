@@ -11,3 +11,8 @@ def get_inputs_dir() -> Path:
 def get_class_dir() -> Path:
     root = get_project_root()
     return root.joinpath("classes")
+
+def set_pd_display():
+    pd.set_option('display.width', 200)
+    pd.set_option('display.max_columns', None)
+
