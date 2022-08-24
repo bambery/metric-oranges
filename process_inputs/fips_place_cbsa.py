@@ -1,19 +1,14 @@
 ###
 #
-# this file proceses and fills a FIPS lookup with Fips.collection[fips_code] -> returns Fips object
-# this file also produces a place -> cbsa lookup as a dict with place_cbsa[place_name] -> returns cbsa_code 
+# this file produces a place -> cbsa lookup as a dict with place_cbsa[place_name] -> returns cbsa_code or FIPS code if no CBSA
 #
 ###
 import pandas as pd
 # local imports
 import shared.utils as utils
 import shared.helpers as helpers
-from classes.fips import Fips
 
 inputs = utils.get_inputs_dir()
-
-pd.set_option('display.width', 200)
-pd.set_option('display.max_columns', None)
 
 file_path_place_cbsa = inputs.joinpath("census", "place_cbsa", "place05-cbsa06.xls")
 
@@ -75,26 +70,21 @@ def build_fips_maps():
     def state_places(state):
         return {key for key in place_cbsa.keys() if key.startswith(state)}
 
-
     places = convert_place_cbsa_to_csv()
 
     place_cbsa = {}
 
     for row in places.splitlines():
-        place_info = row.split(",") # two "places" have commas in their name, neither have airports
-        if len(place_info) > 6:
+        place_info = row.split(",") 
+        if len(place_info) > 6: # two "places" have commas in their name, neither have airports
             continue
+        
         fips_state, state_name, place_name, fips_county, county_name, cbsa_code = place_info 
-
         full_fips = fips_state + fips_county 
 
         if place_name == "St. Cloud city (part)" and fips_county in ['009', '145']:
             continue # 3 different places in MN named this, with different FIPS and CBSAs. I am choosing the one with the airport I want
         place_name = normalize_name(place_name)
-
-        myfips = Fips(full_fips, county_name, state_name, cbsa_code) 
-
-        Fips.collection[full_fips] = myfips
 
         state_place = state_name + "_" + place_name
         if state_place in place_cbsa:
