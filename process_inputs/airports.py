@@ -13,7 +13,10 @@ pd.set_option('display.max_columns', None)
 
 file_path_airports = inputs.joinpath("faa", "NPIAS", "NPIAS-Report-2017-2021-Appendix-A.xlsx")
 
-def process_airports(place_cbsa):
+def process_airports(place_cbsa_lookup):
+
+    # local helpers
+    ###############
     def clean_name(str):
         if str.find(",") > -1:
             str = str.split(",", maxsplit =1)[0]
@@ -36,9 +39,10 @@ def process_airports(place_cbsa):
     mycsv = convert_airports_to_csv()
 
     def state_places(state):
-        return {key for key in place_cbsa.keys() if key.startswith(state)}
+        return {key for key in place_cbsa_lookup.keys() if key.startswith(state)}
 
-
+    # process input file
+    ####################
     for row in mycsv.splitlines():
         state, city, airport_name, locid, hub, enplaned = row.split(",")
 
@@ -51,16 +55,10 @@ def process_airports(place_cbsa):
 
         if city == "Grand Canyon" and state == "AZ": # this is actually located in Tusayan CDP and is part of the Flagstaff CBA
             city = "Tusayan"
-#            cbsa = '22380'
-#            fips = '04005'
         elif city == "St Petersburg-Clearwater" and state == "FL": # there are 2 airports in St Petersburg and this one gets a more specific name
             city = "St Petersburg"
-            #cbsa = '45300'
-            #fips = '12103'
         elif city == "Augusta" and state == "GA": # this is a colloquial name, the full name is Augusta-Richmond County
             city = "Augusta-Richmond County"
-            #cbsa = 12260
-            #fips = 13245
         elif city == "Boise" and state == "ID":
             city = "Boise City"
         elif city == "Hyannis": # named after a business district
@@ -70,18 +68,18 @@ def process_airports(place_cbsa):
         elif city == "Block Island":
             continue # I have chosen to skip this airport. It is a non-hub on a small island off of RI
         elif city == "Dallas-Fort Worth":
-            city = "Dallas" # will get captured by the Dallas-Fort Worth-Arlington CBSA
-
-
+            city = "Dallas" # will get captured by the Dallas-Fort Worth-Arlington CBSA         
+        
+        # Deadhorse is the only airport that is not assigned to a CBSA, nor does it have an entry in the place lookup: manually setting. Otherwise, lookup the FIPS and CBSA
         if city == "Deadhorse":
             cbsa_code = None
             fips_code = '02185'
         else:
-            lookup = place_cbsa.get( state + "_" + city.upper())
-            cbsa_code = lookup["cbsa"]
-            fips_code = lookup["fips"]
+            place = place_cbsa_lookup.get( state + "_" + city.upper())
+            cbsa_code = place["cbsa"]
+            fips_code = place["fips"]
 
-        # the place mapping was from 2006, and no more recent version was available after Trump gutted the Census: numerous reports that were available as of 2018 are all missing. There are some updates that need to be made:
+        # the place mapping was from 2006, and no more recent version was available after Trump gutted the Census: numerous reports that were available as of 2018 are all missing. There are some updates that need to be made to conform to 2015 standards:
         # two airports are located in FIPS that are no longer associated with CBSAs
         if cbsa_code == "28980": # locid: AQD
             cbsa_code = None # does not exist, no record
@@ -89,6 +87,10 @@ def process_airports(place_cbsa):
         elif cbsa_code == "40500": # locid: RKD, Rockland, ME airport - no longer in a CBSA
             cbsa_code = None
 
+        # updates to changed FIPS
+        if fips_code:
+            if fips_code == "02280": 
+                fips_code = "02195" # Petersburg Borough, AK
         # updates to changed CBSAs
         if cbsa_code:
             if cbsa_code == "31100": # old cali cbsa
@@ -112,12 +114,17 @@ def process_airports(place_cbsa):
             elif cbsa_code == "39100": # locid: SWF, NewYork Orange County - old CBSA
                 cbsa_code = "35620"
 
-            Cbsa.collection[cbsa_code]
+            # associate CBSA with this airport
+            ##################################
             Cbsa.collection[cbsa_code].airports.add(locid)
         else:
-            Fips.collection[fips_code].airports.add(fips_code)
+            # associate fips with this airport
+            ##################################
+            # - note that ONLY fips who do NOT belong to a CBSA have airports directly associated with them
+            # - the Airport object remains aware of both CBSA and FIPS
+            Fips.collection[fips_code].airports.add(locid)
 
+        # create airport object
+        #######################
         myairport = Airport(airport_name, state, city, locid, hub, enplaned, cbsa_code, fips_code)
         Airport.collection[locid] = myairport
-
-    print("u made it!!!!!")

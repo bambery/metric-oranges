@@ -3,13 +3,13 @@ import pandas as pd
 import shared.utils as utils
 import shared.helpers as helpers
 from classes.cbsa import Cbsa
+from classes.fips import Fips
 
 inputs = utils.get_inputs_dir()
 
 pd.set_option('display.width', 200)
 pd.set_option('display.max_columns', None)
 
-file_path_fips_lookup = inputs.joinpath("jhu", "UID_ISO_FIPS_LookUp_Table.csv")
 file_path_cbsa_list1 = inputs.joinpath("census", "list1_2015", "list1.xls")
 # the first 10 chars indicate list1 is an MS-OLE2 encoded file from Excel 97. This format is extraordinarily difficult for python to parse.
 # $ print(repr(open(file_path_cbsa_list1, 'rb').read(10)))
@@ -60,19 +60,15 @@ def build_CBSA_maps():
     # County Name -> CBSA code ---- the way the county names are entered is chaotic, and I can better easily scrape them from another file. It is too much work to clean the names as they appear on this list
     # CBSA Code -> CBSA object  -- this is being done under Cbsa.collection
 
-    fips_cbsa = {}
-    county_to_cbsa = {}
-
     for row in mycsv.splitlines():
         code, name, msa, county_name, state, fips_state, fips_county, location = row.split(",")
         if fips_state in helpers.ALL_US_FIPS:
             full_fips = fips_state + fips_county 
-            fips_cbsa[full_fips] = code # map fips -> cbsa code 
+            Fips.collection[full_fips].cbsa = code # map fips -> cbsa code 
             if (code in Cbsa.collection):
                 # have seen this CBSA before, update the list of FIPS assigned
-                Cbsa.collection[code].fips.add(full_fips) 
+                Cbsa.collection[code].fips_codes.add(full_fips) 
             else:
                 # create new CBSA entry
                 mycbsa = Cbsa(code, name, msa, full_fips)
                 Cbsa.collection[code] = mycbsa
-    return (fips_cbsa, county_to_cbsa)

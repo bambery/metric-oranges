@@ -1,6 +1,7 @@
 ###
 #
-# this file produces a place -> cbsa lookup as a dict with place_cbsa[place_name] -> returns cbsa_code or FIPS code if no CBSA
+# this file produces lookup place_cbsa[place_name] -> [cbsa_code , FIPS code] 
+# used for 
 #
 ###
 import pandas as pd
