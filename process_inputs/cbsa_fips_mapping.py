@@ -67,7 +67,7 @@ def build_CBSA_maps():
             Fips.collection[full_fips].cbsa = code # map fips -> cbsa code 
             if (code in Cbsa.collection):
                 # have seen this CBSA before, update the list of FIPS assigned
-                Cbsa.collection[code].fips.add(full_fips) 
+                Cbsa.collection[code].fips_codes.add(full_fips) 
             else:
                 # create new CBSA entry
                 mycbsa = Cbsa(code, name, msa, full_fips)

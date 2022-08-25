@@ -13,11 +13,12 @@ class Airport:
         self.locid = locid
         self.hub = hub
         self.enplaned = enplaned
-        self.cbsa = cbsa
-        self.fips = fips
+        self.cbsa_code = cbsa
+        self.fips_code = fips
+        self.uid = None # assigned in process_inputs/build_uids.py
 
     def __repr__(self):
-        return f'Airport({self.locid}; name: {self.name}; location: {self.city}, {self.state}; hub: {self.hub}; enplaned: {self.enplaned}; cbsa: {self.cbsa}, fips: {self.fips}\n'
+        return f'Airport({self.locid}; name: {self.name}; location: {self.city}, {self.state}; hub: {self.hub}; enplaned: {self.enplaned}; cbsa: {self.cbsa_code}, fips: {self.fips_code}\n'
 
     @classmethod
     def by_state(cls, state):
@@ -29,5 +30,3 @@ class Airport:
         for state in helpers.ALL_US_STATES:
             count[state] = len(cls.by_state(state))
         return count
-
-
