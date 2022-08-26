@@ -8,6 +8,8 @@ import process_inputs.build_edges as be
 from classes.uid import Uid
 from classes.fips import Fips
 from classes.cbsa import Cbsa
+from classes.edge import Edge
+from classes.airport import Airport
 
 # 01 - fips_counties.py
 # first: read in a complete list of all FIPS in the US - there are 3,235 in this file

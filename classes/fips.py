@@ -14,7 +14,7 @@ class Fips:
         self.adjacent_uids = set() # populated by process_inputs/fips_adjacency.py in next step
 
     def __repr__(self):
-        return f'FIPS({self.code}: {self.county}, {self.state}, cbsa: {self.cbsa_code}, class code: {self.class_code}, airports: {self.airports})'
+        return f'FIPS({self.code}: UID: {self.uid}; {self.county}, {self.state}, cbsa: {self.cbsa_code}, class code: {self.class_code}, airports: {self.airports})'
 
     @classmethod
     def get_uid(fips_code):

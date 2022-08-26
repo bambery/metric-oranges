@@ -28,4 +28,4 @@ class Uid:
         self.cbsa_codes = set() # any cbsa contained
 
     def __repr__(self):
-        return f'UID( my_uid: {self.code}, category: {self.category} \nCBSA codes: {self.cbsa_codes} \nFIPS codes: {self.fips_codes})'
+        return f'UID( my_uid: {self.code}, category: {self.category} \nCBSA codes: {self.cbsa_codes}; FIPS codes: {self.fips_codes}),\n airports: {self.airports}'
