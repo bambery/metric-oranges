@@ -14,4 +14,4 @@ class Cbsa:
         self.airports = set()
         
     def __repr__(self):
-        return f'Cbsa("{self.code}", "{self.name}", "{self.msa_designation}", fips: {self.fips_codes})'
+        return f'Cbsa("{self.code}", UID: {self.uid}, name: "{self.name}", msa designation: "{self.msa_designation}",\nfips: {self.fips_codes},\n{self.airports})'

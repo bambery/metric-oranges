@@ -64,7 +64,7 @@ def build_CBSA_maps():
         code, name, msa, county_name, state, fips_state, fips_county, location = row.split(",")
         if fips_state in helpers.ALL_US_FIPS:
             full_fips = fips_state + fips_county 
-            Fips.collection[full_fips].cbsa = code # map fips -> cbsa code 
+            Fips.collection[full_fips].cbsa_code = code # map fips -> cbsa code 
             if (code in Cbsa.collection):
                 # have seen this CBSA before, update the list of FIPS assigned
                 Cbsa.collection[code].fips_codes.add(full_fips) 
