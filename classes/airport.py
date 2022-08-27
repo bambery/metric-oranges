@@ -30,3 +30,7 @@ class Airport:
         for state in helpers.ALL_US_STATES:
             count[state] = len(cls.by_state(state))
         return count
+
+    @classmethod
+    def get_uid(cls, locid):
+        return Airport.collection[locid].uid

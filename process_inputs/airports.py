@@ -70,7 +70,7 @@ def process_airports(place_cbsa_lookup):
         elif city == "Dallas-Fort Worth":
             city = "Dallas" # will get captured by the Dallas-Fort Worth-Arlington CBSA         
         
-        # Deadhorse is the only airport that is not assigned to a CBSA, nor does it have an entry in the place lookup: manually setting. Otherwise, lookup the FIPS and CBSA
+        # Deadhorse does it have an entry in the place lookup and does not belong to a CBSA: manually setting. Otherwise, lookup the FIPS and CBSA
         if city == "Deadhorse":
             cbsa_code = None
             fips_code = '02185'
@@ -91,6 +91,7 @@ def process_airports(place_cbsa_lookup):
         if fips_code:
             if fips_code == "02280": 
                 fips_code = "02195" # Petersburg Borough, AK
+                cbsa_code = None
         # updates to changed CBSAs
         if cbsa_code:
             if cbsa_code == "31100": # old cali cbsa
@@ -98,7 +99,7 @@ def process_airports(place_cbsa_lookup):
                 if locid in ["BUR", "LGB"]: 
                     fips_code = "06037" # Los Angeles County, where this airport resides
                 if locid in ["LAX"]:
-                    fips_code = "06059" # Los Angeles County, where this airport resides
+                    fips_code = "06059" # Orange County, where this airport resides
             elif cbsa_code == "42060": # locid: SBA. Apparently Santa Barbara has changed
                 cbsa_code = "42200"
             elif cbsa_code == "42260": # locid: SRQ, old Sarasota CBSA, FL

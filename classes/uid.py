@@ -26,3 +26,6 @@ class Uid:
         self.airports = set() # airports located within this region
         self.fips_codes  = set() # any fips contained
         self.cbsa_codes = set() # any cbsa contained
+
+    def __repr__(self):
+        return f'UID( my_uid: {self.code}, category: {self.category} \nCBSA codes: {self.cbsa_codes}; FIPS codes: {self.fips_codes}),\n airports: {self.airports}'

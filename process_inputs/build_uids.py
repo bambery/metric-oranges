@@ -7,11 +7,11 @@ def process_fips_for_uid():
     for [fips_code, fips] in Fips.collection.items():
         if fips.cbsa_code == None:
             uid = Uid("FIPS")
-            uid.airports.union(fips.airports)
+            uid.airports = uid.airports.union(fips.airports)
         else:
             cbsa = Cbsa.collection[fips.cbsa_code]
             uid = Uid("CBSA")
-            uid.airports.union(cbsa.airports)
+            uid.airports = uid.airports.union(cbsa.airports)
             # associate CBSA with UID 
             cbsa.uid = uid.code
 
