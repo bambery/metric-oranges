@@ -1,6 +1,6 @@
 *.swp
 *.swo
-inputs/
 **/__pycache__/
 process_inputs/jhu.py
 misc/
+inputs/census/*/*

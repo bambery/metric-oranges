@@ -1,0 +1,40 @@
+____Census____
+
+county_adjacency_2010: 
+- type: txt file
+- accessed: 8/22/2022
+- link: 
+- description:
+- columns: 
+- addl notes:
+
+
+county_fips:
+- type: txt file 
+- accessed: 8/23/2022
+- link: https://www2.census.gov/geo/docs/reference/codes/files/national_county.txt
+- lists each county by FIPS and the geographically adjacent counties
+- description: 
+- columns:
+- addl notes: has an updated timestamp of 2014, but it is unknown precisely what year this represents as this file is not accessible through the interface, only URL manipulation
+
+list1_2015:
+- type: xls file in MS OLE2 encoding from Excel 97
+- accessed:
+- link: 
+- description: lists all FIPS and their mappings to CBSAs from 2015
+- columns:
+- addl notes:
+
+place_cbsa:
+- type:
+- accessed:
+- link:
+- description: 
+- columns:
+- addl notes:
+
+utah_2020_census:
+**************************** unused
+- currently unused
+- future use includes accounting for Utah in death counts - currently it is omitted
