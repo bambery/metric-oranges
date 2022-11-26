@@ -3,10 +3,10 @@ import process_inputs.cbsa_fips_mapping as cbsa
 import process_inputs.fips_place_cbsa as fpc
 import process_inputs.airports as air
 import shared.helpers as foo
-#import process_inputs.build_uids as bu
+import process_inputs.build_uids as bu
 #import process_inputs.build_edges as be
 
-#from classes.uid import Uid
+from classes.uid import Uid
 from classes.fips import Fips
 from classes.cbsa import Cbsa
 #from classes.edge import Edge
@@ -32,7 +32,7 @@ del place_cbsa # need to check if there are other references out there - this fi
 
 ## 5 - construct UIDs
 ## in progress
-#bu.process_fips_for_uid()
+bu.process_fips_for_uid()
 #
 ## 6 - process FIPS adjacency file and update ajacent counties for each Fips instance
 ##  complete
