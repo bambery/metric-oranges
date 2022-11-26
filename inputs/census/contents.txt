@@ -3,19 +3,28 @@ ____Census____
 county_adjacency_2010:
 - type: txt file
 - accessed: 8/22/2022
-- link:
-- description:
+- page: https://www.census.gov/geographies/reference-files/2010/geo/county-adjacency.html
+- link: https://www2.census.gov/geo/docs/reference/county_adjacency.txt
+- description: given a FIPs in cols 0 and 1, in cols 2 and 3 list all adjacent FIPS
 - columns:
-- addl notes:
-
+    0: county name, county state
+    1: county FIPS
+    2: county name, county state that is adjacent to county in columns 0 and 1
+    3: FIPS for county in col 2
+- addl notes: need to ignore FIPS for US territories
 
 county_fips:
 - type: txt file
 - accessed: 8/23/2022
+- page: none, cannot access through UI that I could find
 - link: https://www2.census.gov/geo/docs/reference/codes/files/national_county.txt
-- lists each county by FIPS and the geographically adjacent counties
-- description:
+- description: for each state, lists each county by name and FIPS
 - columns:
+    0: state abbr
+    1: first 2 digits of FIPS (state code)
+    2: last 3 digits of FIPS (county code)
+    3: county name
+    4: county type code
 - addl notes: has an updated timestamp of 2014, but it is unknown precisely what year this represents as this file is not accessible through the interface, only URL manipulation
 
 list1_2015:

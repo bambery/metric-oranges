@@ -9,7 +9,7 @@ from classes.fips import Fips
 from classes.edge import Edge
 from classes.airport import Airport
 
-inputs = utils.get_inputs_dir() 
+inputs = utils.get_inputs_dir()
 # note that this file is a windows encoded text file, ie windows-1252
 # header: none
 # [0] - county, state name
@@ -22,7 +22,7 @@ def build_edges():
     with open(file_path_fips_adjacency, encoding='cp1252', newline='') as file:
         reader = csv.reader(file, delimiter='\t')
         for row in reader:
-            if row[1]: # if there is an entry in col 0, then this is begins a new adjacency entry 
+            if row[1]: # if there is an entry in col 0, then this is begins a new adjacency entry
                 if row[1] == "27165": # there is a typo in the input file that omits Watonwan County, MN's name
                     county = "Watonwan County"
                     state = "MN"
@@ -31,7 +31,7 @@ def build_edges():
                 if state not in helpers.ALL_US_STATES:
                     continue # skip non-US states
                 curr_fips = row[1]
-            else: # there is no fips in col 0, then we are in the middle of assigning adjacencies 
+            else: # there is no fips in col 0, then we are in the middle of assigning adjacencies
                 county, state = row[2].split(', ')
                 if state not in helpers.ALL_US_STATES:
                     continue # skip non-US states
