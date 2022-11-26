@@ -4,7 +4,7 @@ class Fips:
 
     def __init__(self, code, county, state, class_code, cbsa = None):
         self.code = code
-        self.county = county 
+        self.county = county
         self.state = state
         self.cbsa_code = cbsa
         self.class_code = class_code # see doc for details - unused currently
@@ -14,7 +14,7 @@ class Fips:
         self.adjacent_uids = set() # populated by process_inputs/fips_adjacency.py in next step
 
     def __repr__(self):
-        return f'FIPS({self.code}: UID: {self.uid}; {self.county}, {self.state}, cbsa: {self.cbsa_code}, class code: {self.class_code}, airports: {self.airports})'
+        return f'FIPS({self.code}: UID: {self.uid}; {self.county}, {self.state}; cbsa: {self.cbsa_code}; class code: {self.class_code}; airports: {self.airports})'
 
     @classmethod
     def get_uid(fips_code):

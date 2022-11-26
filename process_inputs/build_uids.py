@@ -12,7 +12,7 @@ def process_fips_for_uid():
             cbsa = Cbsa.collection[fips.cbsa_code]
             uid = Uid("CBSA")
             uid.airports = uid.airports.union(cbsa.airports)
-            # associate CBSA with UID 
+            # associate CBSA with UID
             cbsa.uid = uid.code
 
         uid.cbsa_codes.add(fips.cbsa_code)

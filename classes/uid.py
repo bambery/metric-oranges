@@ -5,7 +5,7 @@ from classes.fips import Fips
 class Uid:
 
     collection = {}
-    __uid_counter = -1 
+    __uid_counter = -1
 
     @classmethod
     def __get_next_uid(cls):
@@ -21,7 +21,7 @@ class Uid:
         else:
             raise ValueError("Must pass 'fips' or 'cbsa' when creating a new UID")
 
-        self.code = Uid.__get_next_uid() 
+        self.code = Uid.__get_next_uid()
         self.adjacent = set() # geographically adjacent counties by UID
         self.airports = set() # airports located within this region
         self.fips_codes  = set() # any fips contained

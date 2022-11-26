@@ -1,0 +1,18 @@
+__FAA__
+
+
+NPIAS-Report-2017-2021-Appendix-A.xlsx
+note: this report is part of a larger report called 5010
+- type: 2010 xlsx
+- library required: openpyxl
+- accessed: 8/23/2022
+- page accessed from: https://www.faa.gov/airports/planning_capacity/npias/current/historical
+- link: https://www.faa.gov/sites/faa.gov/files/airports/planning_capacity/npias/current/NPIAS-Report-2017-2021-Appendix-A.xlsx
+- description: indentifies airports included in the national airport system (more here: https://www.faa.gov/sites/faa.gov/files/airports/planning_capacity/npias/current/NPIAS-Report-2017-2021-Narrative.pdf)
+- columns used:
+    0: "State" - state airport is located in
+    1: "City" - city airport is located in
+    2: "Name" - name of airport
+    3: "Locid" - unique identifier used by the FAA
+    5: "Hub" - hub designation (Small, Medium, Large, Non-Hub, or blank for no designation)
+    9: "Enplaned" - number of US annual enplaned commerical passengers

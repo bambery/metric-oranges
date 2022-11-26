@@ -1,7 +1,7 @@
 ###
 #
-# this file produces lookup place_cbsa[place_name] -> [cbsa_code , FIPS code] 
-# used for 
+# this file produces lookup place_cbsa[place_name] -> [cbsa_code , FIPS code]
+# used for linking airports to a fips/cbsa, no other use
 #
 ###
 import pandas as pd
@@ -27,14 +27,14 @@ def build_fips_maps():
         return places.to_csv(None, index=False, header=False)
 
     # the place names in the place-cbsa file are all appended with a word which I can find no list nor definition of. Places that have the word "City" as part of their name have the word "city" (in lower case) appended to the end anyway.
-    # there are 5 cities in the US named "Lynchburg" in MS, OH, SC, TN, and VA, and one named "Lynch City" in Kentucky. I cannot. 
+    # there are 5 cities in the US named "Lynchburg" in MS, OH, SC, TN, and VA, and one named "Lynch City" in Kentucky. I cannot.
 
-    # should be refactored. Check if last item is all lowercase or CDP. if yes, pop, repeat
+    # Check if last item is all lowercase or CDP. if yes, pop, repeat
     def normalize_name(place):
 
-        if place == "Lexington-Fayette": 
+        if place == "Lexington-Fayette":
             return "LEXINGTON" # airport is named after truncated county name
-        elif place == "Hartsville-Trousdale": # airport named after county 
+        elif place == "Hartsville-Trousdale": # airport named after county
             return place.upper()
         elif place == "Louisville-Jefferson County (balance)": # airport is named after truncated county name
             return "LOUISVILLE"
@@ -49,7 +49,7 @@ def build_fips_maps():
             words.pop()
         elif last == "(balance)":
             second_to_last = len(words)-1
-            if words[second_to_last].islower() or words[second_to_last] == "CDP": 
+            if words[second_to_last].islower() or words[second_to_last] == "CDP":
                 words.pop()
         elif len(words) > 1:
             second_to_last = len(words)-1
@@ -67,7 +67,7 @@ def build_fips_maps():
             words[loc] = "ST"
 
         return " ".join(words)
-    
+
     def state_places(state):
         return {key for key in place_cbsa.keys() if key.startswith(state)}
 
@@ -76,12 +76,12 @@ def build_fips_maps():
     place_cbsa = {}
 
     for row in places.splitlines():
-        place_info = row.split(",") 
+        place_info = row.split(",")
         if len(place_info) > 6: # two "places" have commas in their name, neither have airports
             continue
-        
-        fips_state, state_name, place_name, fips_county, county_name, cbsa_code = place_info 
-        full_fips = fips_state + fips_county 
+
+        fips_state, state_name, place_name, fips_county, county_name, cbsa_code = place_info
+        full_fips = fips_state + fips_county
 
         if place_name == "St. Cloud city (part)" and fips_county in ['009', '145']:
             continue # 3 different places in MN named this, with different FIPS and CBSAs. I am choosing the one with the airport I want

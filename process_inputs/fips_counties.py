@@ -19,8 +19,8 @@ def build_fips():
         reader = csv.reader(fips_file)
         for row in reader:
             state, fips_state, fips_county, county_name, class_code = row
-            
-            if state not in helpers.ALL_US_STATES: continue # skip AS, GU, MP, VI, PR, UM 
+
+            if state not in helpers.ALL_US_STATES: continue # skip AS, GU, MP, VI, PR, UM
             full_fips = fips_state + fips_county
-            myfips = Fips(full_fips, county_name, state, class_code) 
+            myfips = Fips(full_fips, county_name, state, class_code)
             Fips.collection[full_fips] = myfips
