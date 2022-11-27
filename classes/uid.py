@@ -1,3 +1,4 @@
+import itertools
 from classes.fips import Fips
 
 # this class is a "universal identifier" for the regions considered in this project. Each one represents a CBSA if applicable, and if not, the FIPS inbetween
@@ -5,12 +6,11 @@ from classes.fips import Fips
 class Uid:
 
     collection = {}
-    __uid_counter = -1
+    __uid_counter = itertools.count()
 
     @classmethod
     def __get_next_uid(cls):
-        cls.__uid_counter +=1
-        return cls.__uid_counter
+        return next(cls.__uid_counter)
 
     def __init__(self, category):
         category = category.upper()
