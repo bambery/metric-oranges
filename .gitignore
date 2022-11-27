@@ -4,3 +4,5 @@
 process_inputs/jhu.py
 misc/
 inputs/census/*/*
+inputs/jhu/weekly_us/
+inputs/jhu/testing/

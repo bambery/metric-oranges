@@ -1,9 +1,11 @@
+import shared.helpers as helpers
+
 class Fips:
     # list of all FIPS by code
     collection = {}
 
     def __init__(self, code, county, state, class_code, cbsa = None):
-        self.code = code
+        self.code = helpers.format_fips(code)
         self.county = county
         self.state = state
         self.cbsa_code = cbsa
@@ -17,5 +19,6 @@ class Fips:
         return f'FIPS({self.code}: UID: {self.uid}; {self.county}, {self.state}; cbsa: {self.cbsa_code}; class code: {self.class_code}; airports: {self.airports})'
 
     @classmethod
-    def get_uid(fips_code):
-        return Fips.collection[fips_code].uid
+    def get_uid_code(cls, fips_code):
+        breakpoint()
+        return cls.collection[fips_code].uid
