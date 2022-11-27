@@ -2,8 +2,8 @@ import process_inputs.fips_counties as fc
 import process_inputs.cbsa_fips_mapping as cbsa
 import process_inputs.fips_place_cbsa as fpc
 import process_inputs.airports as air
-import shared.helpers as foo
 import process_inputs.build_uids as bu
+import process_inputs.jhu as jhu
 #import process_inputs.build_edges as be
 
 from classes.uid import Uid
@@ -30,10 +30,16 @@ place_cbsa = fpc.build_fips_maps()
 airports = air.process_airports(place_cbsa)
 del place_cbsa # need to check if there are other references out there - this file is only used to process airports
 
-## 5 - construct UIDs
-## in progress
+# 5 - construct UIDs
+# in progress
 bu.process_fips_for_uid()
-#
+
+# 6 - process JHU daily files into weekly reports
+jhu.create_weekly_reports(True)
+
+# 7 - process deaths and attach to UID
+
+
 ## 6 - process FIPS adjacency file and update ajacent counties for each Fips instance
 ##  complete
 #be.build_edges()
