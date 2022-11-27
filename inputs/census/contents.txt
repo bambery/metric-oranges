@@ -1,7 +1,8 @@
 ____Census____
 
 county_adjacency_2010:
-- type: txt file
+- encoding: windows encoded txt file, windows-1252
+- library required: csv
 - accessed: 8/22/2022
 - page: https://www.census.gov/geographies/reference-files/2010/geo/county-adjacency.html
 - link: https://www2.census.gov/geo/docs/reference/county_adjacency.txt
