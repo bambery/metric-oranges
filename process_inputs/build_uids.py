@@ -23,6 +23,3 @@ def process_fips_for_uid():
         # associate airports with a uid
         for airport in uid.airports:
             Airport.collection[airport].uid = uid.code
-
-        # collect the uid for safekeeping
-        Uid.collection[uid.code] = uid

@@ -28,6 +28,9 @@ class Uid:
         self.cbsa_codes = set() # any cbsa contained
         # key is date of week start YY-MM-DD, val is death count
         self.deaths = {}
+        # add to collection
+        Uid.collection[self.code] = self
+
     def __repr__(self):
         return f'UID( my_uid: {self.code}, category: {self.category} \nCBSA codes: {self.cbsa_codes}; FIPS codes: {self.fips_codes}),\n airports: {self.airports}'
 

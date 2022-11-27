@@ -1,5 +1,4 @@
 import pandas as pd
-#local imports
 import shared.utils as utils
 import shared.helpers as helpers
 from classes.airport import Airport
@@ -123,9 +122,10 @@ def process_airports(place_cbsa_lookup):
             ##################################
             # - note that ONLY fips who do NOT belong to a CBSA have airports directly associated with them
             # - the Airport object remains aware of both CBSA and FIPS
+            if not Fips.collection.get(fips_code, False):
+                breakpoint()
             Fips.collection[fips_code].airports.add(locid)
 
         # create airport object
         #######################
         myairport = Airport(airport_name, state, city, locid, hub, enplaned, cbsa_code, fips_code)
-        Airport.collection[locid] = myairport
