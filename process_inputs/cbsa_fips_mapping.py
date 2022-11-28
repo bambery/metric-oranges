@@ -10,7 +10,7 @@ inputs = utils.get_inputs_dir()
 pd.set_option('display.width', 200)
 pd.set_option('display.max_columns', None)
 
-file_path_cbsa_list1 = inputs.joinpath("census", "list1_2015", "list1.xls")
+file_path_cbsa_list1 = inputs.joinpath("census", "list1", "list1_2020.xls")
 # the first 10 chars indicate list1 is an MS-OLE2 encoded file from Excel 97. This format is difficult for Python to parse.
 # $ print(repr(open(file_path_cbsa_list1, 'rb').read(10)))
 #b'\xd0\xcf\x11\xe0\xa1\xb1\x1a\xe1\x00\x00'

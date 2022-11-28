@@ -4,7 +4,7 @@ __FAA__
 NPIAS-Report-2017-2021-Appendix-A.xlsx
 note: this report is part of a larger report called 5010
 - type: 2010 xlsx
-- library required: openpyxl
+- library required: openpyxl, pandas
 - accessed: 8/23/2022
 - page accessed from: https://www.faa.gov/airports/planning_capacity/npias/current/historical
 - link: https://www.faa.gov/sites/faa.gov/files/airports/planning_capacity/npias/current/NPIAS-Report-2017-2021-Appendix-A.xlsx

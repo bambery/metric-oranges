@@ -1,5 +1,17 @@
 ____Census____
 
+county_fips/all_geocodes_v2020.xlsx
+- encoding: first 10 chars look like b'PK\x03\x04\x14\x00\x06\x00\x08\x00', so 2010 xlsx
+- library required: openpyxl
+- accessed: 11/27/22
+- page: https://www.census.gov/geographies/reference-files/2020/demo/popest/2020-fips.html
+- link: https://www2.census.gov/programs-surveys/popest/geographies/2020/all-geocodes-v2020.xlsx
+- description: current FIPS codes
+- columns used:
+    1: state fips code
+    2: county fips code
+    6: county/etc name
+
 county_adjacency_2010:
 - encoding: windows encoded txt file, windows-1252
 - library required: csv
@@ -14,6 +26,46 @@ county_adjacency_2010:
     3: FIPS for county in col 2
 - addl notes: need to ignore FIPS for US territories
 
+
+list1/list1_2020:
+- type: xls file in MS OLE2 encoding from Excel 97
+- library required: xlrd, pandas
+- accessed: 11/27/22
+- page: https://www.census.gov/geographies/reference-files/time-series/demo/metro-micro/delineation-files.html
+- link: https://www2.census.gov/programs-surveys/metro-micro/geographies/reference-files/2020/delineation-files/list1_2020.xls
+- description: lists all FIPS and their mappings to CBSAs from 2020
+- columns used:
+    0: CBSA code
+    3: CBSA name
+    4: Metro/Micro designation
+    7: County name
+    8: State full name
+    9: FIPS state code
+    10: FIPS county code
+    11: Central/Outlying (not used currently)
+- addl notes:
+
+place_cbsa/place05-cbsa06.xls:
+- type: ancient 2008 xls file
+- accessed:
+- page: https://www.census.gov/programs-surveys/metro-micro/technical-documentation/file-layouts/05-place-to-06-cbsa.html
+- link: https://www2.census.gov/programs-surveys/metro-micro/technical-documentation/file-layout/05-place-to-06-cbsa/place-cbsa-doc.txt
+- description: I needed a way to map the cities of airports to a FIPS, and this was the only document anywhere that was willing to map a city to a county. Since I am using CBSAs, whichever county the airport gets placed nearly always ends up in the wider CBSA.
+- columns:
+    0: State FIPS
+    1: State abbr
+    3: Place name (CDP)
+    4: County FIPS
+    5: CBSA code
+    6: CBSA title
+- addl notes: this file is from 2006, and there have been many changes since then to FIPS and CBSAs. A lot of manual work was required in the processing file to try and accommodate the changes.
+
+utah_2020_census:
+**************************** unused
+- currently unused
+- future use includes accounting for Utah in death counts - currently it is omitted
+
+****** old, replaced by all-geocodes-v2020 ***********
 county_fips:
 - type: txt file
 - accessed: 8/23/2022
@@ -27,25 +79,3 @@ county_fips:
     3: county name
     4: county type code
 - addl notes: has an updated timestamp of 2014, but it is unknown precisely what year this represents as this file is not accessible through the interface, only URL manipulation
-
-list1_2015:
-- type: xls file in MS OLE2 encoding from Excel 97
-- library required: xlrd
-- accessed:
-- link:
-- description: lists all FIPS and their mappings to CBSAs from 2015
-- columns:
-- addl notes:
-
-place_cbsa:
-- type:
-- accessed:
-- link:
-- description:
-- columns:
-- addl notes:
-
-utah_2020_census:
-**************************** unused
-- currently unused
-- future use includes accounting for Utah in death counts - currently it is omitted
