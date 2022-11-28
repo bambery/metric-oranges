@@ -27,16 +27,17 @@ county_adjacency_2010:
 - addl notes: need to ignore FIPS for US territories
 
 
-list1_2015:
+list1/list1_2020:
 - type: xls file in MS OLE2 encoding from Excel 97
 - library required: xlrd
 - accessed:
-- link:
-- description: lists all FIPS and their mappings to CBSAs from 2015
-- columns:
+- page: https://www.census.gov/geographies/reference-files/time-series/demo/metro-micro/delineation-files.html
+- link: https://www2.census.gov/programs-surveys/metro-micro/geographies/reference-files/2020/delineation-files/list1_2020.xls
+- description: lists all FIPS and their mappings to CBSAs from 2020
+- columns used:
 - addl notes:
 
-place_cbsa:
+place_cbsa/:
 - type:
 - accessed:
 - link:

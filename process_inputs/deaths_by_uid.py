@@ -24,6 +24,10 @@ def count_deaths_by_uid():
             for row in reader:
                 fips = row[0]
                 deaths = row[1]
+
+                # there are zombie entries for defunct FIPS which always have 0 deaths. Skip these, and any other zero death entries.
+                if int(deaths) == 0:
+                    continue
                 uid_code = Fips.get_uid_code(fips)
                 Uid.add_deaths(uid_code, week_name, deaths)
 

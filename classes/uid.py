@@ -6,7 +6,7 @@ from classes.fips import Fips
 class Uid:
 
     collection = {}
-    __uid_counter = itertools.count()
+    __uid_counter = itertools.count(1)
 
     @classmethod
     def __get_next_uid(cls):
