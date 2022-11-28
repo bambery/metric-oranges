@@ -1,7 +1,7 @@
 import csv
 
 from classes.fips import Fips
-from classes.uid import Uid
+from classes.node import Node
 
 import shared.helpers as helpers
 import shared.utils as utils
@@ -11,9 +11,9 @@ inputs = utils.get_inputs_dir()
 dir_weekly = inputs.joinpath("jhu", "weekly_us")
 dir_weekly_test = inputs.joinpath("jhu", "testing")
 
-## deaths on UID
+## deaths will be saved on Node
 
-def count_deaths_by_uid():
+def count_deaths_by_node():
     #for weekly_deaths in dir_weekly.iterdir():
     for weekly_deaths in dir_weekly_test.iterdir():
         print('inside weekly')
@@ -28,7 +28,7 @@ def count_deaths_by_uid():
                 # there are zombie entries for defunct FIPS which always have 0 deaths. Skip these, and any other zero death entries.
                 if int(deaths) == 0:
                     continue
-                uid_code = Fips.get_uid_code(fips)
-                Uid.add_deaths(uid_code, week_name, deaths)
+                node_id = Fips.get_node_id(fips)
+                Node.add_deaths(node_id, week_name, deaths)
 
 ## deaths on Week

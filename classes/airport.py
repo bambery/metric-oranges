@@ -15,11 +15,11 @@ class Airport:
         self.enplaned = enplaned
         self.cbsa_code = cbsa
         self.fips_code = fips
-        self.uid = None # assigned in process_inputs/build_uids.py
+        self.node_id = None # assigned in process_inputs/build_nodes.py
         Airport.collection[locid] = self
 
     def __repr__(self):
-        return f'Airport({self.locid}; name: {self.name}; location: {self.city}, {self.state}; hub: {self.hub}; enplaned: {self.enplaned}; cbsa: {self.cbsa_code}, fips: {self.fips_code}\n'
+        return f'Airport({self.locid}; name: {self.name}; location: {self.city}, {self.state}; hub: {self.hub}; enplaned: {self.enplaned}; cbsa: {self.cbsa_code}, fips: {self.fips_code}, node id: {self.node_id}\n'
 
     @classmethod
     def by_state(cls, state):
@@ -33,5 +33,5 @@ class Airport:
         return count
 
     @classmethod
-    def get_uid(cls, locid):
-        return Airport.collection[locid].uid
+    def get_node_id(cls, locid):
+        return Airport.collection[locid].node_id
