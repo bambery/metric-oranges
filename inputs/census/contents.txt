@@ -1,6 +1,6 @@
 ____Census____
 
-all_geocodes_v2020.xlsx
+county_fips/all_geocodes_v2020.xlsx
 - encoding: first 10 chars look like b'PK\x03\x04\x14\x00\x06\x00\x08\x00', so 2010 xlsx
 - library required: openpyxl
 - accessed: 11/27/22
@@ -29,21 +29,36 @@ county_adjacency_2010:
 
 list1/list1_2020:
 - type: xls file in MS OLE2 encoding from Excel 97
-- library required: xlrd
-- accessed:
+- library required: xlrd, pandas
+- accessed: 11/27/22
 - page: https://www.census.gov/geographies/reference-files/time-series/demo/metro-micro/delineation-files.html
 - link: https://www2.census.gov/programs-surveys/metro-micro/geographies/reference-files/2020/delineation-files/list1_2020.xls
 - description: lists all FIPS and their mappings to CBSAs from 2020
 - columns used:
+    0: CBSA code
+    3: CBSA name
+    4: Metro/Micro designation
+    7: County name
+    8: State full name
+    9: FIPS state code
+    10: FIPS county code
+    11: Central/Outlying (not used currently)
 - addl notes:
 
-place_cbsa/:
-- type:
+place_cbsa/place05-cbsa06.xls:
+- type: ancient 2008 xls file
 - accessed:
-- link:
-- description:
+- page: https://www.census.gov/programs-surveys/metro-micro/technical-documentation/file-layouts/05-place-to-06-cbsa.html
+- link: https://www2.census.gov/programs-surveys/metro-micro/technical-documentation/file-layout/05-place-to-06-cbsa/place-cbsa-doc.txt
+- description: I needed a way to map the cities of airports to a FIPS, and this was the only document anywhere that was willing to map a city to a county. Since I am using CBSAs, whichever county the airport gets placed nearly always ends up in the wider CBSA.
 - columns:
-- addl notes:
+    0: State FIPS
+    1: State abbr
+    3: Place name (CDP)
+    4: County FIPS
+    5: CBSA code
+    6: CBSA title
+- addl notes: this file is from 2006, and there have been many changes since then to FIPS and CBSAs. A lot of manual work was required in the processing file to try and accommodate the changes.
 
 utah_2020_census:
 **************************** unused

@@ -1,5 +1,3 @@
-import shared.helpers as helpers
-
 class Fips:
     # list of all FIPS by code
     collection = {}
