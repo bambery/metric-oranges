@@ -4,7 +4,6 @@ import process_inputs.fips_place_cbsa as fpc
 import process_inputs.airports as air
 import process_inputs.build_uids as bu
 import process_inputs.jhu as jhu
-import process_inputs.deaths_by_uid as dbu
 #import process_inputs.build_edges as be
 
 from classes.uid import Uid
@@ -37,10 +36,9 @@ bu.process_fips_for_uid()
 
 # 6 - process JHU daily files into weekly reports
 jhu.create_weekly_reports(True)
-#jhu.create_weekly_reports()
 
 # 7 - process deaths and attach to UID
-dbu.count_deaths_by_uid()
+
 
 ## 6 - process FIPS adjacency file and update ajacent counties for each Fips instance
 ##  complete
