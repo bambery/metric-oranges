@@ -7,15 +7,15 @@ class Fips:
         self.county = county_name
         self.state = state_abbr
         self.cbsa_code = None # populated by process_inputs/cbsa_fips_mapping.py
-        self.uid = None # populated by process_inputs/build_uids.py
+        self.node_id = None # populated by process_inputs/build_nodes.py
         self.airports = set() # conditionally populated by process_inputs/airports.py
         self.adjacent_fips = set() # populated by process_inputs/fips_adjacency.py in next step
         self.adjacent_uids = set() # populated by process_inputs/fips_adjacency.py in next step
         Fips.collection[self.code] = self
 
     def __repr__(self):
-        return f'FIPS({self.code}: UID: {self.uid}; {self.county}, {self.state}; cbsa: {self.cbsa_code}; airports: {self.airports})'
+        return f'FIPS({self.code}: Node: {self.node_id}; {self.county}, {self.state}; cbsa: {self.cbsa_code}; airports: {self.airports})'
 
     @classmethod
-    def get_uid_code(cls, fips_code):
-        return cls.collection[fips_code].uid
+    def get_node_id(cls, fips_code):
+        return cls.collection[fips_code].node_id
