@@ -10,16 +10,18 @@ def process_fips_for_nodes():
             node.airports = node.airports.union(fips.airports)
         else:
             cbsa = Cbsa.collection[fips.cbsa_code]
-            node = Node("CBSA")
+            node = Node.get_by_cbsa(cbsa.code)
+            if not node:
+                node = Node("CBSA")
             node.airports = node.airports.union(cbsa.airports)
             # associate CBSA with UID
-            cbsa.node_id = node.id
+            cbsa.node_id = node.id_
 
         node.cbsa_code = fips.cbsa_code
         node.fips_codes.add(fips_code)
         # associate the FIPS with the UID
-        fips.node_id = node.id
+        fips.node_id = node.id_
 
         # associate airports with a uid
         for airport in node.airports:
-            Airport.collection[airport].node_id = node.id
+            Airport.collection[airport].node_id_ = node.id_

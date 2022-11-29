@@ -21,8 +21,10 @@ def build_fips():
 
         fips_state = row[1]
         fips_county = row[2]
+        county_subdivision = row[3]
         county_name = row[6]
         state_abbr = helpers.FIPS_US_STATE.get(fips_state, False)
 
         if state_abbr not in helpers.ALL_US_STATES or fips_county == '000': continue # skip AS, GU, MP, VI, PR, UM
+        if county_subdivision != '00000': continue # subdivisions all have the FIPS of their parent
         myfips = Fips(county_name, state_abbr, fips_state, fips_county)

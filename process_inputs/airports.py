@@ -72,7 +72,7 @@ def process_airports(place_cbsa_lookup):
         elif city == "St Mary'S" and state == "AK": # typo in report
             city = "St Mary's"
 
-        # Deadhorse does not appear in the places file
+        # Deadhorse does not appear in the places file. It is in Kusilvak Census Area
         if city == "Deadhorse":
             cbsa_code = None
             fips_code = '02185'
@@ -84,9 +84,8 @@ def process_airports(place_cbsa_lookup):
         # the place mapping was from 2006, and no more recent version was available after Trump gutted the Census: numerous reports that were available as of 2018 are all missing. There are some updates that need to be made to conform to 2020 standards:
 
         # two airports are located in FIPS that are no longer associated with CBSAs
-        if cbsa_code == "28980": # locid: AQD
+        if cbsa_code == "28980": # locid: ADQ, Kodiak Island Borough
             cbsa_code = None # does not exist, no record
-            fips_code = "02150" # Kodak Island Borough
         elif cbsa_code == "40500": # locid: RKD, Rockland, ME airport - no longer in a CBSA
             cbsa_code = None
 

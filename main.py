@@ -4,12 +4,11 @@ import process_inputs.fips_place_cbsa as fpc
 import process_inputs.airports as air
 import process_inputs.build_nodes as bn
 import process_inputs.jhu as jhu
-#import process_inputs.build_edges as be
+import process_inputs.adjacency_edges as adje
 
 from classes.node import Node
 from classes.fips import Fips
 from classes.cbsa import Cbsa
-#from classes.edge import Edge
 from classes.airport import Airport
 
 # 01 - fips_counties.py
@@ -37,12 +36,10 @@ bn.process_fips_for_nodes()
 # 6 - process JHU daily files into weekly reports
 jhu.create_weekly_reports(True)
 
-# 7 - process deaths and attach to UID
+# 7 - process county adjacencies
+adje.build_edges()
 
+# 8 - process deaths and attach to Node
 
-## 6 - process FIPS adjacency file and update ajacent counties for each Fips instance
-##  complete
-#be.build_edges()
-#
 print("you are in main")
 breakpoint()
