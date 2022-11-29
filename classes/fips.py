@@ -9,8 +9,9 @@ class Fips:
         self.cbsa_code = None # populated by process_inputs/cbsa_fips_mapping.py
         self.node_id = None # populated by process_inputs/build_nodes.py
         self.airports = set() # conditionally populated by process_inputs/airports.py
-        self.adjacent_fips = set() # populated by process_inputs/fips_adjacency.py in next step
-        self.adjacent_uids = set() # populated by process_inputs/fips_adjacency.py in next step
+        self.adjacent_fips_codes = set() # populated by process_inputs/fips_adjacency.py in next step
+        # FIXME: do I need to keep this on FIPS?
+        self.adjacent_node_ids = set() # populated by process_inputs/fips_adjacency.py in next step
         Fips.collection[self.code] = self
 
     def __repr__(self):
@@ -19,3 +20,7 @@ class Fips:
     @classmethod
     def get_node_id(cls, fips_code):
         return cls.collection[fips_code].node_id
+
+    @classmethod
+    def get(cls, code):
+        return cls.collection[code]
