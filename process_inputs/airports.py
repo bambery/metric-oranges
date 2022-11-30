@@ -38,13 +38,12 @@ def process_airports(place_cbsa_lookup):
 
     mycsv = convert_airports_to_csv()
 
-    def state_places(state):
-        return {key for key in place_cbsa_lookup.keys() if key.startswith(state)}
-
     # process input file
     ####################
     row = None
     for row in mycsv.splitlines():
+        fips_code = None
+        cbsa_code = None
         state, city, airport_name, locid, hub, enplaned = row.split(",")
 
         if len(hub) == 0: continue # ignore row if hub is empty
@@ -138,6 +137,7 @@ def process_airports(place_cbsa_lookup):
             # - the Airport object remains aware of both CBSA and FIPS
             Fips.collection[fips_code].airports.add(locid)
 
-        # create airport object
+        # collect "corrected" airport object
         #######################
         myairport = Airport(airport_name, state, city, locid, hub, enplaned, cbsa_code, fips_code)
+        Airport.collection[locid] = myairport

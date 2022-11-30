@@ -16,7 +16,6 @@ class Airport:
         self.cbsa_code = cbsa
         self.fips_code = fips
         self.node_id = None # assigned in process_inputs/build_nodes.py
-        Airport.collection[locid] = self
 
     def __repr__(self):
         return f'Airport({self.locid}; name: {self.name}; location: {self.city}, {self.state}; hub: {self.hub}; enplaned: {self.enplaned}; cbsa: {self.cbsa_code}, fips: {self.fips_code}, node id: {self.node_id}\n'

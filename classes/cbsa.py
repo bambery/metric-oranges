@@ -20,7 +20,7 @@ class Cbsa:
         self.airports = set()
 
     def __repr__(self):
-        return f'Cbsa(" code:{self.code}", Node id: {self.node_id}, name: "{self.name}", msa designation: "{self.msa_designation}",\nfips_codes: {self.fips_codes},\nairports{self.airports})'
+        return f'Cbsa(" code:{self.code}", Node id: {self.node_id}, name: "{self.name}", msa designation: "{self.msa_designation}",\nfips_codes: {self.fips_codes},\nairports: {self.airports})'
     @classmethod
     def get_node_id(cls, cbsa_code):
         return cls.collection[cbsa_code].node_id
