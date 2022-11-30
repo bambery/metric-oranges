@@ -43,7 +43,7 @@ cbsa.build_CBSA_maps()
 # 8 - process deaths and attach to Node
 #dbn.count_deaths_by_node()
 
-hd = jhu.distribute_utah()
+jhu.hamilton('Weber-Morgan', 100)
 
 print("you are in main")
 breakpoint()
