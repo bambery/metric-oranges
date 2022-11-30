@@ -1,4 +1,5 @@
 import csv
+import openpyxl
 
 from classes.fips import Fips
 from classes.node import Node
@@ -11,7 +12,7 @@ inputs = utils.get_inputs_dir()
 dir_weekly = inputs.joinpath("jhu", "weekly_us")
 dir_weekly_test = inputs.joinpath("jhu", "testing")
 
-## deaths will be saved on Node
+# deaths will be saved on Node
 
 def count_deaths_by_node():
     #for weekly_deaths in dir_weekly.iterdir():
@@ -30,5 +31,3 @@ def count_deaths_by_node():
                     continue
                 node_id = Fips.get_node_id(fips)
                 Node.add_deaths(node_id, week_name, deaths)
-
-## deaths on Week

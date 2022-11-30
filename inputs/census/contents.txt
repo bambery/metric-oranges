@@ -60,12 +60,16 @@ place_cbsa/place05-cbsa06.xls:
     6: CBSA title
 - addl notes: this file is from 2006, and there have been many changes since then to FIPS and CBSAs. A lot of manual work was required in the processing file to try and accommodate the changes.
 
-utah_2020_census:
-**************************** unused
-- currently unused
-- future use includes accounting for Utah in death counts - currently it is omitted
+utah_2020_census/co-est2021-pop-49.xlsx:
+- type:
+- accessed: 8/22/22
+- page: https://www.census.gov/data/datasets/time-series/demo/popest/2020s-counties-total.html#par_textimage_739801612
+- link: https://www2.census.gov/programs-surveys/popest/tables/2020-2021/counties/totals/co-est2021-pop-49.xlsx
+- description: used to estimate actual COVID spread for Utah in death counts - Utah does not publish deaths by FIPS alone out of every state.
+- columns:
+       for fips in Fips.collection if fips.state ==old
 
-****** old, replaced by all-geocodes-v2020 ***********
+****** old, replaced by all-geocodes-v2020, used for comparison analysis but not data generation ***********
 county_fips:
 - type: txt file
 - accessed: 8/23/2022
