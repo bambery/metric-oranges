@@ -1,0 +1,28 @@
+"Bear River",,
+,"49003","Box Elder County"
+,"49005","Cache County"
+,"49033","Rich County"
+"Central Utah",,
+,"49023","Juab County"
+,"49027","Millard County"
+,"49031","Piute County"
+,"49041","Sevier County"
+,"49055","Wayne County"
+,"49039","Sanpete County"
+"Southeast Utah",,
+,"49007","Carbon County"
+,"49015","Emery County"
+,"49019","Grand County"
+"Southwest Utah",,
+,"49001","Beaver County"
+,"49017","Garfield County"
+,"49021","Iron County"
+,"49025","Kane County"
+,"49053","Washington County"
+"TriCounty",,
+,"49009","Daggett County"
+,"49013","Duchesne County"
+,"49047","Uintah County"
+"Weber-Morgan",,
+,"49057","Weber County"
+,"49029","Morgan County"

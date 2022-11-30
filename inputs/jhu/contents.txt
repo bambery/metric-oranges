@@ -8,6 +8,11 @@ COVID-19/csse_covid_19_data/csse_covid_19_daily_reports/
 - link: https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_daily_reports
 - description:
 - columns used:
+    0: FIPS code
+    1: name of county or county equivalent
+    2: full name of province or state or equivalent
+    3: country full name (except US, which is "US")
+    8: deaths
 - notes:
 
 in order to obtain this data, inside the jhu folder, clone down the desired folder:

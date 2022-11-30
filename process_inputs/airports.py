@@ -35,6 +35,7 @@ def process_airports(place_cbsa_lookup):
                 )
         # optionally, write to temp file and read back in line by line
         return airports.to_csv(None, index = False, header = False)
+
     mycsv = convert_airports_to_csv()
 
     def state_places(state):
@@ -42,6 +43,7 @@ def process_airports(place_cbsa_lookup):
 
     # process input file
     ####################
+    row = None
     for row in mycsv.splitlines():
         state, city, airport_name, locid, hub, enplaned = row.split(",")
 
