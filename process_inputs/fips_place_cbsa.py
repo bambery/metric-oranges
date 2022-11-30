@@ -75,6 +75,7 @@ def build_fips_maps():
 
     place_cbsa = {}
 
+    row = None
     for row in places.splitlines():
         place_info = row.split(",")
         if len(place_info) > 6: # two "places" have commas in their name, neither have airports

@@ -23,5 +23,6 @@ def process_fips_for_nodes():
         fips.node_id = node.id_
 
         # associate airports with a uid
+        airport = None
         for airport in node.airports:
             Airport.collection[airport].node_id_ = node.id_

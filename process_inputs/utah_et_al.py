@@ -54,6 +54,5 @@ def process_files():
             hd_fips[hd][fips_code] = county_population
     read_hd_fips()
     read_utah_pop()
-    # sort fips by largest pop
 
     return [hd_fips, hd_populations]

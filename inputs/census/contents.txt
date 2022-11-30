@@ -67,7 +67,6 @@ utah_2020_census/co-est2021-pop-49.xlsx:
 - link: https://www2.census.gov/programs-surveys/popest/tables/2020-2021/counties/totals/co-est2021-pop-49.xlsx
 - description: used to estimate actual COVID spread for Utah in death counts - Utah does not publish deaths by FIPS alone out of every state.
 - columns:
-       for fips in Fips.collection if fips.state ==old
 
 ****** old, replaced by all-geocodes-v2020, used for comparison analysis but not data generation ***********
 county_fips:

@@ -22,6 +22,7 @@ remapped_fips = { '02270': '02158', '46113': '46102', '51515': '51019' }
 def build_edges():
     with open(file_path_fips_adjacency, encoding='cp1252', newline='') as file:
         reader = csv.reader(file, delimiter='\t')
+        row = None
         for row in reader:
             if row[1]: # if there is an entry in col 1, then this is begins a new adjacency entry. Cannot check col 0 as the file has a typographical error in that column
                 if row[1] == "27165": # there is a typo in the input file that omits Watonwan County, MN's name

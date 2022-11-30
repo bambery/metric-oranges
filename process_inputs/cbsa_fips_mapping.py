@@ -28,14 +28,15 @@ def build_CBSA_maps():
                 return "Micro"
             else:
                 return "Metro"
+
         def state_abbreviation(abbr):
             abbr = abbr.upper()
             if abbr in helpers.US_STATES:
                 return helpers.US_STATES[abbr]
             return None
+
         def replace_cbsa_comma(cbsa_name):
             return cbsa_name.replace(", ", "_")
-
 
         cbsas = pd.read_excel(
                 file_path_cbsa_list1,
@@ -60,6 +61,7 @@ def build_CBSA_maps():
     # County Name -> CBSA code ---- the way the county names are entered is chaotic, and I can better easily scrape them from another file. It is too much work to clean the names as they appear on this list
     # CBSA Code -> CBSA object  -- this is being done under Cbsa.collection
 
+    row = None
     for row in mycsv.splitlines():
         code, name, msa, county_name, state, fips_state, fips_county, location = row.split(",")
         if fips_state in helpers.ALL_US_FIPS:
