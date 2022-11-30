@@ -24,7 +24,6 @@ def count_deaths_by_node(test=False):
         for weekly_deaths in weekly_dir.iterdir():
             with open(weekly_deaths) as file:
                 week_name = weekly_deaths.stem
-                print('reading file ' + week_name)
                 reader = csv.reader(file)
                 for row in reader:
                     fips = row[0]
@@ -51,7 +50,6 @@ def count_deaths_by_node(test=False):
             source = inputs.joinpath(dir_weekly, filename)
             dest = inputs.joinpath(dir_weekly_test, filename)
             shutil.copy(source, dest)
-            print('copied', filename)
 
         count_deaths(dir_weekly_test)
     else:

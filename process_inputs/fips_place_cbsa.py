@@ -61,8 +61,8 @@ def build_fips_maps():
             words = list(map(lambda word: word.upper(), words))
             loc = words.index("ST.") if "ST." in words else -1
         except:
-            print("theres no words??")
-            breakpoint()
+            raise Exception("theres no words??")
+
         if loc > -1:
             words[loc] = "ST"
 

@@ -17,21 +17,20 @@ from classes.airport import Airport
 fc.build_fips()
 
 # 02 - cbsa_fips_mapping.py
-#complete
+# next map each fips to a CBSA, if it exists
 cbsa.build_CBSA_maps()
 
 # 3 - fips_place_cbsa
-# complete
+# used for associating an airport to a county
 # returns a lookup for place_cbsa["place name"] -> [fips_code, cbsa_code]
-#place_cbsa = fpc.build_fips_maps()
+place_cbsa = fpc.build_fips_maps()
 
 # 4 - airports
-# complete
-#airports = air.process_airports(place_cbsa)
-#del place_cbsa # need to check if there are other references out there - this file is only used to process airports
+# link airports to CBSAs and FIPS
+airports = air.process_airports(place_cbsa)
+del place_cbsa # need to check if there are other references out there - this file is only used to process airports
 
-# 5 - construct UIDs
-# in progress
+# 5 - construct Nodes by CBSA for counties that have them, or by FIPS for those without
 bn.process_fips_for_nodes()
 
 # 6 - process JHU daily files into weekly reports
@@ -39,7 +38,7 @@ bn.process_fips_for_nodes()
 jhu.create_weekly_reports()
 
 # 7 - process county adjacencies
-#adje.build_edges()
+adje.build_edges()
 
 # 8 - process deaths and attach to Node
 dbn.count_deaths_by_node(True)
