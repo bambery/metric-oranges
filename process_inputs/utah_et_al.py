@@ -55,7 +55,5 @@ def process_files():
     read_hd_fips()
     read_utah_pop()
     # sort fips by largest pop
-    for hd, fips in hd_fips.items():
-        fips = dict(sorted(fips.items(), key=lambda x:x[1]))
 
     return [hd_fips, hd_populations]

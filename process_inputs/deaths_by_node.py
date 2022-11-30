@@ -15,8 +15,8 @@ dir_weekly_test = inputs.joinpath("jhu", "testing")
 # deaths will be saved on Node
 
 def count_deaths_by_node():
-    #for weekly_deaths in dir_weekly.iterdir():
-    for weekly_deaths in dir_weekly_test.iterdir():
+    for weekly_deaths in dir_weekly.iterdir():
+    #for weekly_deaths in dir_weekly_test.iterdir():
         print('inside weekly')
         with open(weekly_deaths) as file:
             week_name = weekly_deaths.stem

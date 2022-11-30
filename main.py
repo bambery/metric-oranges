@@ -23,27 +23,26 @@ cbsa.build_CBSA_maps()
 # 3 - fips_place_cbsa
 # complete
 # returns a lookup for place_cbsa["place name"] -> [fips_code, cbsa_code]
-#place_cbsa = fpc.build_fips_maps()
+place_cbsa = fpc.build_fips_maps()
 
 # 4 - airports
 # complete
-#airports = air.process_airports(place_cbsa)
-#del place_cbsa # need to check if there are other references out there - this file is only used to process airports
+airports = air.process_airports(place_cbsa)
+del place_cbsa # need to check if there are other references out there - this file is only used to process airports
 
 # 5 - construct UIDs
 # in progress
-#bn.process_fips_for_nodes()
+bn.process_fips_for_nodes()
 
 # 6 - process JHU daily files into weekly reports
 #jhu.create_weekly_reports(True)
+jhu.create_weekly_reports()
 
 # 7 - process county adjacencies
-#adje.build_edges()
+adje.build_edges()
 
 # 8 - process deaths and attach to Node
-#dbn.count_deaths_by_node()
-
-jhu.hamilton('Weber-Morgan', 100)
+dbn.count_deaths_by_node()
 
 print("you are in main")
 breakpoint()

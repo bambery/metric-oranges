@@ -5,7 +5,7 @@
 "Central Utah",,
 ,"49023","Juab County"
 ,"49027","Millard County"
-,"49031","Puite County"
+,"49031","Piute County"
 ,"49041","Sevier County"
 ,"49055","Wayne County"
 ,"49039","Sanpete County"
@@ -19,7 +19,7 @@
 ,"49021","Iron County"
 ,"49025","Kane County"
 ,"49053","Washington County"
-"Tricounty",,
+"TriCounty",,
 ,"49009","Daggett County"
 ,"49013","Duchesne County"
 ,"49047","Uintah County"
