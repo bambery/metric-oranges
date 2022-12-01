@@ -60,6 +60,11 @@ place_cbsa/place05-cbsa06.xls:
     6: CBSA title
 - addl notes: this file is from 2006, and there have been many changes since then to FIPS and CBSAs. A lot of manual work was required in the processing file to try and accommodate the changes.
 
+link to file layout doc: https://www2.census.gov/programs-surveys/popest/technical-documentation/file-layouts/2020-2021/CO-EST2021-ALLDATA.pdf
+link to file: https://www2.census.gov/programs-surveys/popest/datasets/2020-2021/counties/totals/co-est2021-alldata.csv
+I do not know if this report is obtainable by the UI. I could not find it and only discovered it by accident.
+- this contains the populations by county for the 2020 census.
+
 utah_2020_census/co-est2021-pop-49.xlsx:
 - type:
 - accessed: 8/22/22
