@@ -73,7 +73,7 @@ def hamilton(hd, deaths, hd_fips, hd_populations):
         raise Exception("You messed up somehow, and did not distibute enough deaths.")
 
     return county_deaths
-
+    
 # dates must be passed in as strings in the format of YYYY-MM-DD
 def create_weekly_reports(start_date_str, end_date_str):
     def determine_start_end_date(start_str, end_str):
