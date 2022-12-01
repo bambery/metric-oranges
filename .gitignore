@@ -2,7 +2,6 @@
 *.swo
 **/__pycache__/
 *:Zone.Identifier
-process_inputs/jhu.py
 misc/
 inputs/census/*/*
 inputs/jhu/weekly_us/
