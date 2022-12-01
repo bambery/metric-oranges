@@ -50,6 +50,8 @@ def build_edges():
 
             curr_fips_obj = Fips.collection[curr_fips]
             adj_fips_node_id = Fips.get_node_id(adj_fips)
+            # do not add an adjacency to one's self
+            if curr_fips_obj.node_id == adj_fips_node_id: continue
 
             # associate adjacent FIPSs and UIDs on the Fips object
             curr_fips_obj.adjacent_fips_codes.add(adj_fips)

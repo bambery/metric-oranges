@@ -10,13 +10,29 @@ import shared.utils as utils
 import shared.helpers as helpers
 import process_inputs.utah_et_al as uea
 
+from classes.node import Node
+
 inputs = utils.get_inputs_dir()
 
-dir_jhu_inputs = inputs.joinpath("jhu", "COVID-19", "csse_covid_19_data", "csse_covid_19_daily_reports")
-dir_jhu_destination = inputs.joinpath("jhu", "weekly_us")
+file_jhu_time_series = inputs.joinpath("jhu", "COVID-19", "csse_covid_19_data", "csse_covid_19_time_series", "time_series_covid19_deaths_US.csv")
+
+# I found a 2020 population by county with FIPS file, too late, which would be better to read in to get all county pops, to replace this little process. Alas.
+ut_hd_fips, ut_hd_populations = uea.process_files()
+ma_hd_fips = {'Dukes and Nantucket': {'25007': 20600, '25019': 14255 }}
+ma_hd_populations = {'Dukes and Nantucket': 34855 }
+ak_hd_fips = {'Bristol Bay plus Lake and Peninsula': {'02060': 838, '02164': 1416 }}
+ak_hd_populations = {'Bristol Bay plus Lake and Peninsula': 2254}
 
 def hamilton(hd, deaths, hd_fips, hd_populations):
     # Hamilton's Method
+    fips = None
+    # even if no deaths this week, still need to add zero entries for this date in the contained fips
+    if deaths == 0:
+        county_deaths = {}
+        for fips in hd_fips[hd].keys():
+            county_deaths[fips] = 0
+        return county_deaths
+
     ## calculate the divisor for the HD
     divisor = hd_populations[hd]/deaths
     remaining = deaths
@@ -58,122 +74,113 @@ def hamilton(hd, deaths, hd_fips, hd_populations):
 
     return county_deaths
 
-
-# format of daily jhu input files:
-# 0: fips, 1: county name, 2: state name, 3: country abbreviated, 4: not used, 5: lat, 6: long, 7: confirmed cases, 8: deaths, 9: recovered (not used), 10: active (not used), 11: combined_key, 12: incident rate, 13: case fatality ratio
-
-# note: default is to always generate new reports. This is because the death counts, even historical ones from 2020, are still being updated and backfilled or adjusted as new data is recovered. Passing False will skip reprocessing any weeks for which a weekly file already exists, only generating new reports for additional daily
 # dates must be passed in as strings in the format of YYYY-MM-DD
-def create_weekly_reports(start_date_str, end_date_str, regenerate = True):
-    # delete old reports and create a fresh directory
-    if regenerate:
-        import shutil
-        if os.path.isdir(dir_jhu_destination):
-            shutil.rmtree(dir_jhu_destination)
+def create_weekly_reports(start_date_str, end_date_str):
+    def determine_start_end_date(start_str, end_str):
+        start_date = pen.from_format(start_str, "YYYY-MM-DD")
+        prev_day = start_date.subtract(days=1)
+        earliest_date = pen.from_format('2020-01-01', 'YYYY-MM-DD')
+        if prev_day <= earliest_date:
+            raise Exception("The start date is too far in the past. Choose a start date after 2022-01-01. Try 2020-01-02.")
 
-    if not os.path.isdir(dir_jhu_destination):
-        os.mkdir(dir_jhu_destination)
+        end_date = pen.from_format(end_str, "YYYY-MM-DD")
 
-    ut_hd_fips, ut_hd_populations = uea.process_files()
-    ma_hd_fips = {'Dukes and Nantucket': {'25007': 20600, '25019': 14255 }}
-    ma_hd_populations = {'Dukes and Nantucket': 34855 }
+        # If the passed in start date is not a Sunday, begin generating reports on the next closest Sunday.
+        if not start_date.day_of_week == pen.SUNDAY:
+            start_date = start_date.next(pen.SUNDAY)
 
-    def toFilenameStr(pen):
-        return pen.format("YY-MM-DD") + "_week.csv"
+        # if the passed in end date is a Saturday, assume that is the end of the final week desired
+        if end_date.day_of_week == pen.SATURDAY:
+            end_date = end_date.next(pen.SUNDAY)
+        # if end_date is any day of the week other than Sunday or Saturday, set the previous sunday as the cutoff.
+        elif not end_date.day_of_week == pen.SUNDAY:
+            end_date = end_date.previous(pen.SUNDAY)
 
-    def toJhuFilenameStr(pen):
-        return pen.format("MM-DD-YYYY") + ".csv"
+        return [start_date, end_date]
 
-    start_date = pen.from_format(start_date_str, "YYYY-MM-DD")
-    prev_day = start_date.subtract(days=1)
-    prev_day_file = dir_jhu_inputs / toJhuFilenameStr(prev_day)
-    if not os.path.exists(prev_day_file):
-        raise Exception("The start date is too far in the past. Choose a start date on or after 2022-03-13")
+    def for_key(pen):
+        return pen.format("M/D/YY")
 
-    end_date = pen.from_format(end_date_str, "YYYY-MM-DD")
+    # populates Node death counts
+    # this is the method to adjust if you wish to attach deaths to FIPS or another data structure, or by a different period other than week
+    def assign_to_node(start_date, end_date, node_deaths_dict):
+        week_start = start_date
+        week_end = week_start.next(pen.SUNDAY)
+        while (week_start < end_date):
 
-    # If the passed in start date is not a Sunday, begin generating reports on the next closest Sunday.
-    if not start_date.day_of_week == pen.SUNDAY:
-        week_start = start_date.next(pen.SUNDAY)
+            count_start = int(row[ for_key(week_start) ])
+            count_end = int(row[ for_key(week_end) ])
+            # note: sometimes a week will have a net negative death total.
+            # https://github.com/CSSEGISandData/COVID-19/issues/6250
+            # this is fine.
+            week_count = count_end - count_start
 
-    # if the passed in end date is a Saturday, assume that is the end of the final week desired
-    if end_date.day_of_week == pen.SATURDAY:
-        end_date = end_date.next(pen.SUNDAY)
-    # if end_date is any day of the week other than Sunday or Saturday, set the previous sunday as the cutoff.
-    elif not end_date.day_of_week == pen.SUNDAY:
-        end_date = end_date.previous(pen.SUNDAY)
-
-    curr_date = week_start
-    week_end = week_start.next(pen.SUNDAY)
-    week_counts = {}
-
-    while (curr_date < end_date):
-        output_file = dir_jhu_destination / toFilenameStr(week_start)
-        # if regenerate=False, skip already generated files
-        if os.path.exists(output_file) and not regenerate:
-            week_start = week_start.next(pen.SUNDAY)
-            week_end = week_start.next(pen.SUNDAY)
-            curr_date = week_start
-            continue
-
-        # generate weekly report
-        if (curr_date == week_end):
-            # output weekly report
-            df = pd.DataFrame.from_dict(week_counts, orient='index')
-            df.to_csv(output_file, header=False)
-            df = None
-
-            # reset weekly vars
-            week_counts = {}
+           # node = Node.get_by_fips(fips_code)
+            date_key = week_start.format('YY-MM-DD')
+            curr_deaths = node_deaths_dict.setdefault(date_key, 0)
+            node_deaths_dict[date_key] = curr_deaths + week_count
+            week_count = 0
             week_start = week_end
             week_end = week_start.next(pen.SUNDAY)
+    ###########
 
-        daily_file = dir_jhu_inputs / toJhuFilenameStr(curr_date)
+    [start_date_x, end_date_x] = determine_start_end_date(start_date_str, end_date_str)
 
-        if os.path.exists(daily_file):
-            with open(daily_file) as file:
-                reader = csv.reader(file, delimiter=",")
-                header = next(reader)
+    if os.path.exists(file_jhu_time_series):
+        with open(file_jhu_time_series, newline='') as csvfile:
+            reader = csv.DictReader(csvfile)
+            for row in reader:
+                fips_code = helpers.format_fips(row['FIPS'].split('.')[0]) if row['FIPS'] else ''
+                county_name = row['Admin2']
+                country_name = row['iso2']
+                state = row['Province_State']
 
-                # if fips and "county" name are not blank, county is not "unassigned" or begins with "Out of", and not a territory
-                row = None
-                for row in reader:
-                    fips_raw = row[0]
-                    county_name = row[1]
-                    state = row[2]
-                    country = row[3]
-                    deaths = int(row[8]) if row[8] != '' else 0
-                    fips_code = None
+                if (country_name != 'US'
+                        or state.upper() not in helpers.US_STATES.keys()
+                        or county_name.startswith('Unassigned')
+                        or county_name.startswith("Out of")
+                        or fips_code == '02261'):
+                    continue
 
-                    if county_name and country == "US" and county_name != "Unassigned" and not county_name.startswith("Out of") and state.upper() in helpers.US_STATES.keys():
-                        if fips_raw:
-                            fips_code = helpers.format_fips(fips_raw)
-                        elif country == "US" and not fips_raw and state == "Missouri" and county_name == "Kansas City":
-                            # Kansas City mostly lies in Jackson County. This will get swept up by the "Kansas City, MO-KS" CBSA: 28140, in addition to the other counties that contain Kansas City.
-                            fips_code = '29095'
+                curr_hd_fips = None
+                curr_hd_populations = None
+                # 02164 is "Bristol Bay plus Lake and Penninsula"
+                if fips_code == '02164' or not fips_code:
+                    # Kansas City mostly lies in Jackson County. This will get swept up by the "Kansas City, MO-KS" CBSA: 28140, in addition to the other counties that contain Kansas City.
+                    if state == "Missouri" and county_name == "Kansas City":
+                        fips_code = '29095'
+                    elif state == "Utah" and county_name in ut_hd_fips.keys():
+                        fips_code = '00000'
+                        ##### temporary
+                        curr_hd_fips = ut_hd_fips
+                        curr_hd_populations = ut_hd_populations
+                    elif state == "Massachusetts" and county_name == "Dukes and Nantucket":
+                        fips_code = '00000'
+                        ###### temporary
+                        continue
+                        curr_hd_fips = {'Dukes and Nantucket': {'25007': 20600, '25019': 14255 }}
+                        curr_hd_populations = {'Dukes and Nantucket': 34855 }
+                    elif state == "Alaska" and county_name == 'Bristol Bay plus Lake and Peninsula':
+                        fips_code == '00000'
+                        curr_hd_fips = ak_hd_fips
+                        curr_hd_populations = ak_hd_populations
+                    else:
+                        continue
 
-                        if fips_code:
-                            new_tot = week_counts.get( fips_code, 0 ) + int(deaths)
-                            week_counts[ fips_code ]= new_tot
-                        elif not fips_raw and state == "Massachusetts" and county_name == "Dukes and Nantucket":
-                            # accomodate Dukes/Nantucket
-                            deaths_to_add = hamilton(county_name, deaths, ma_hd_fips, ma_hd_populations)
-                            fips = None
-                            count = None
-                            for fips, count in deaths_to_add.items():
-                                new_tot = week_counts.get( fips, 0 ) + int(count)
-                                week_counts[ fips ] = new_tot
+                if fips_code == "00000":
+                    node_deaths = {}
+                    assign_to_node(start_date_x, end_date_x, node_deaths)
 
-                        elif not fips_raw and state == "Utah":
-                            # distribute Utah health dept deaths among counties
-                            deaths_to_add = hamilton(county_name, deaths, ut_hd_fips, ut_hd_populations)
-                            fips = None
-                            count = None
-                            for fips, count in deaths_to_add.items():
-                                new_tot = week_counts.get( fips, 0 ) + int(count)
-                                week_counts[ fips ] = new_tot
-
-                curr_date = curr_date.add(days=1)
-        else:
-            raise Exception("trying to open file that doesn't exist: " + next_file)
-            break
+                    week_name = None
+                    d_count = None
+                    for week_name, d_count in node_deaths.items():
+                        deaths_to_add = hamilton(county_name, d_count, curr_hd_fips, curr_hd_populations)
+                        fips = None
+                        count = None
+                        for fips, count in deaths_to_add.items():
+                            actual_node = Node.get_by_fips(fips)
+                            new_tot = actual_node.deaths.get( week_name, 0 ) + int(count)
+                            actual_node.deaths[week_name] = new_tot
+                else:
+                    node_deaths = Node.get_by_fips(fips_code).deaths
+                    assign_to_node(start_date_x, end_date_x, node_deaths)

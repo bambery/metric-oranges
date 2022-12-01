@@ -15,7 +15,7 @@ class Node:
     def __get_next_id(cls):
         return next(cls.__id_counter)
 
-    def __init__(self, category):
+    def __init__(self, category, name):
         category = category.upper()
         if category in ["FIPS", "F"]:
             self.category = "F"
@@ -26,12 +26,13 @@ class Node:
 
         # who decided "id" was a great name for a built-in method?
         self.id_ = str(Node.__get_next_id())
+        self.name = name
         self.adjacent_nodes = set() # geographically adjacent Nodes
         self.airports = set() # airports located within this region
         self.fips_codes  = set() # any fips contained
         self.cbsa_code = None # if this Node represents a CBSA, this field will be populated
 
-        # deahs key is date of week start YYYY_MM_DD, val is total new deaths for this week
+        # deaths key is date of week start YYYY_MM_DD, val is total new deaths for this week
         # note: sometimes a week will have a net negative death total.
         # https://github.com/CSSEGISandData/COVID-19/issues/6250
         # this is fine. If this is not fine for you, fix it yourself
@@ -61,3 +62,6 @@ class Node:
     def get_by_cbsa(cls, cbsa_code):
         id_ = Cbsa.get_node_id(cbsa_code)
         return cls.collection.get(id_)
+
+    def adj_nodes_names(self):
+        return [Node.get(n).name for n in self.adjacent_nodes]
