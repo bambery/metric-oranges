@@ -34,15 +34,15 @@ del place_cbsa # need to check if there are other references out there - this fi
 bn.process_fips_for_nodes()
 
 # 6 - process JHU daily files into weekly reports
-#jhu.create_weekly_reports(True)
-jhu.create_weekly_reports()
+jhu.create_weekly_reports('2022-01-01', '2022-03-31')
+#jhu.create_weekly_reports()
 
 # 7 - process county adjacencies
 adje.build_edges()
 
 # 8 - process deaths and attach to Node
-dbn.count_deaths_by_node(True)
-#dbn.count_deaths_by_node()
+#dbn.count_deaths_by_node(True)
+dbn.count_deaths_by_node()
 
 print("you are in main")
 breakpoint()

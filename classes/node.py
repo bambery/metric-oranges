@@ -41,6 +41,8 @@ class Node:
     @classmethod
     def add_deaths(cls, id_, week_name, deaths):
         cls.collection[id_].deaths[week_name] = cls.collection[id_].deaths.get(week_name, 0) + int(deaths)
+        # if you want to see deaths on FIPS, uncomment adding deaths to FIPS class
+        #Fips.collection[id_].deaths[week_name] = cls.collection[id_].deaths.get(week_name, 0) + int(deaths)
 
     @classmethod
     def get(cls, id_):

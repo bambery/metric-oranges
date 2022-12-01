@@ -34,6 +34,10 @@ def count_deaths_by_node(test=False):
                         continue
                     node_id = Fips.get_node_id(fips)
                     Node.add_deaths(node_id, week_name, deaths)
+                    ####### TESING #####
+                    # changes also in classes.fips, classes.node
+                    #Fips.collection.get(fips).deaths[week_name] = Fips.collection[fips].deaths.get(week_name, 0) + int(deaths)
+
 
     # if spot checking, control which files to examine here
     if test:

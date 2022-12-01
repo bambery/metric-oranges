@@ -12,6 +12,8 @@ class Fips:
         self.adjacent_fips_codes = set() # populated by process_inputs/fips_adjacency.py in next step
         # FIXME: do I need to keep this on FIPS?
         self.adjacent_node_ids = set() # populated by process_inputs/fips_adjacency.py in next step
+        # only used for testing combined with change in classes/Node.py, process_inputs/deaths_by_node
+#        self.deaths = {}
         Fips.collection[self.code] = self
 
     def __repr__(self):
