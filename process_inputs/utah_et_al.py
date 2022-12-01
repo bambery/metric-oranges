@@ -5,7 +5,6 @@ import shared.utils as utils
 inputs = utils.get_inputs_dir()
 
 file_path_utah_census = inputs.joinpath("census", "utah_2020_census", "co-est2021-pop-49.xlsx")
-file_path_utah_health_dist = inputs.joinpath("utah_ibis", "Density.xlsx")
 file_path_utah_fips_hd = inputs.joinpath("utah_ibis", "health_districts_fips.txt")
 
 ## Utah does not report deaths by FIPS, but instead by "health districts" which cover several counties.

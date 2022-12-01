@@ -1,5 +1,4 @@
 import csv
-import openpyxl
 import os
 
 from classes.fips import Fips
