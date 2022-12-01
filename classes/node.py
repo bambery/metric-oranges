@@ -30,7 +30,11 @@ class Node:
         self.airports = set() # airports located within this region
         self.fips_codes  = set() # any fips contained
         self.cbsa_code = None # if this Node represents a CBSA, this field will be populated
-        # key is date of week start YY-MM-DD, val is death count
+
+        # deahs key is date of week start YYYY_MM_DD, val is total new deaths for this week
+        # note: sometimes a week will have a net negative death total.
+        # https://github.com/CSSEGISandData/COVID-19/issues/6250
+        # this is fine. If this is not fine for you, fix it yourself
         self.deaths = {}
         # add to collection
         Node.collection[self.id_] = self
