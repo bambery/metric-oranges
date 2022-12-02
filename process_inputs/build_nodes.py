@@ -8,7 +8,7 @@ def process_fips_for_nodes():
         node = None
         cbsa = None
         if fips.cbsa_code == None:
-            node = Node("FIPS", fips.county + _ + fips.state)
+            node = Node("FIPS", fips.county + "_" + fips.state)
             node.airports = node.airports.union(fips.airports)
         else:
             cbsa = Cbsa.collection[fips.cbsa_code]
