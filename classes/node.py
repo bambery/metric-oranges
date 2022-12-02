@@ -27,7 +27,8 @@ class Node:
         # who decided "id" was a great name for a built-in method?
         self.id_ = str(Node.__get_next_id())
         self.name = name
-        self.adjacent_nodes = set() # geographically adjacent Nodes
+        self.edges_adjacent = set() # geographically adjacent Nodes
+        self.edges_flights = set() # connected by flights between airports
         self.airports = set() # airports located within this region
         self.fips_codes  = set() # any fips contained
         self.cbsa_code = None # if this Node represents a CBSA, this field will be populated
@@ -41,7 +42,7 @@ class Node:
         Node.collection[self.id_] = self
 
     def __repr__(self):
-        return f'Node( id: {self.id_}, category: {self.category} \nCBSA: {self.cbsa_code}; FIPS codes: {self.fips_codes}),\n airports: {self.airports}, \nadjacent nodes: {self.adjacent_nodes}'
+        return f'Node( id: {self.id_}, category: {self.category} \nCBSA: {self.cbsa_code}; FIPS codes: {self.fips_codes}),\n airports: {self.airports}, \nadjacent nodes: {self.edges_adjacent}'
 
     @classmethod
     def add_deaths(cls, id_, week_name, deaths):
@@ -64,4 +65,7 @@ class Node:
         return cls.collection.get(id_)
 
     def adj_nodes_names(self):
-        return [Node.get(n).name for n in self.adjacent_nodes]
+        return [Node.get(n).name for n in self.edges_adjacent]
+
+    def edges(self):
+        return self.edges_adjacent.union(self.edges_flights)

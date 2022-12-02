@@ -58,7 +58,7 @@ def build_edges():
             curr_fips_obj.adjacent_node_ids.add(adj_fips_node_id)
 
             # create an "adjacent county" edge
-            Node.get(curr_fips_obj.node_id).adjacent_nodes.add(adj_fips_node_id)
+            Node.get(curr_fips_obj.node_id).edges_adjacent.add(adj_fips_node_id)
 
 
     # finished processing file - now to manually add new edges
@@ -68,8 +68,8 @@ def build_edges():
         fips_a = Fips.get(fips_code_a)
         fips_b = Fips.get(fips_code_b)
 
-        node_a.adjacent_nodes.add(node_b.id_)
-        node_b.adjacent_nodes.add(node_a.id_)
+        node_a.edges_adjacent.add(node_b.id_)
+        node_b.edges_adjacent.add(node_a.id_)
         fips_a.adjacent_fips_codes.add(fips_code_b)
         fips_a.adjacent_node_ids.add(fips_b.node_id)
         fips_b.adjacent_fips_codes.add(fips_code_a)

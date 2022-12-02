@@ -7,7 +7,9 @@ def process_fips_for_nodes():
     for [fips_code, fips] in Fips.collection.items():
         node = None
         cbsa = None
-        if fips.cbsa_code == None:
+        if not fips.cbsa_code:
+            if fips_code == "08097":
+                breakpoint()
             node = Node("FIPS", fips.county + "_" + fips.state)
             node.airports = node.airports.union(fips.airports)
         else:
@@ -26,5 +28,5 @@ def process_fips_for_nodes():
 
         # associate airports with a uid
         airport = None
-        for airport in node.airports:
-            Airport.collection[airport].node_id_ = node.id_
+        for locid in node.airports:
+            Airport.collection[locid].node_id = node.id_
