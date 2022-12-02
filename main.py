@@ -5,12 +5,12 @@ import process_inputs.airports as air
 import process_inputs.build_nodes as bn
 import process_inputs.jhu as jhu
 import process_inputs.adjacency_edges as adje
+import process_inputs.flight_edges as fled
 
 from classes.node import Node
 from classes.fips import Fips
 from classes.cbsa import Cbsa
 from classes.airport import Airport
-
 
 # 01 - fips_counties.py
 # first: read in a complete list of all FIPS in the US - there are 3,235 in this file
@@ -34,13 +34,13 @@ del place_cbsa # need to check if there are other references out there - this fi
 bn.process_fips_for_nodes()
 
 # 6 - process JHU daily files into weekly reports
-#jhu.create_weekly_reports('2022-01-01', '2022-03-31')
-#jhu.create_weekly_reports()
-jhu.create_weekly_reports('2022-01-03', '2022-04-28')
+jhu.create_weekly_counts()
 
 # 7 - process county adjacencies
 adje.build_edges()
 
+#8 - build flight routes
+fled.process_flight_edges()
 
 print("you are in main")
 breakpoint()

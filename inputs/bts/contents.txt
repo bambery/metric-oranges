@@ -1,0 +1,11 @@
+Origin_and_Destination_Survey_DB1BMarkey_2019_3.csv
+
+I was lucky and able to actually download a report. Most of the time it fails to download.
+bts/db1bMarket/
+
+page (click on tiny "download" in the "DB1BMarket" row):https://www.transtats.bts.gov/Tables.asp?QO_VQ=EFI&QO_anzr=Nv4yv0r%FDb4vtv0%FDn0q%FDQr56v0n6v10%FDf748rB%FD%FLQOEO%FM&QO_fu146_anzr=b4vtv0%FDn0q%FDQr56v0n6v10%FDf748rB
+link: you can ONLY download a prezipped file for a year and quarter.
+
+I wish I could find any definition for the "db1b product" downloaded from here:
+https://www.bts.gov/topics/airlines-and-airports/origin-and-destination-survey-data
+However, I could not and I was not able to get any answers about this from the BTS, whom I did contact several times asking about this. It does not correlate to any of the DB1B table definitions I could find.

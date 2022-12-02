@@ -15,6 +15,7 @@ class Airport:
         self.enplaned = enplaned
         self.cbsa_code = cbsa
         self.fips_code = fips
+        self.destinations = set()
         self.node_id = None # assigned in process_inputs/build_nodes.py
 
     def __repr__(self):
@@ -34,3 +35,21 @@ class Airport:
     @classmethod
     def get_node_id(cls, locid):
         return Airport.collection[locid].node_id
+
+    @classmethod
+    def get(cls, locid):
+        if locid in cls.collection.keys():
+            return cls.collection[locid]
+        else:
+            return None
+
+    # flight paths are not considered to be directional
+    # we also only want flights for airports we are tracking
+    @classmethod
+    def add_flight_route(cls, origin_locid, dest_locid):
+        origin_airport = cls.collection.get(origin_locid, None)
+        if origin_airport:
+            dest_airport = cls.collection.get(dest_locid, None)
+            if dest_airport:
+                origin_airport.destinations.add(dest_locid)
+                dest_airport.destinations.add(origin_locid)

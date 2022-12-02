@@ -4,5 +4,4 @@
 *:Zone.Identifier
 misc/
 inputs/census/*/*
-inputs/jhu/weekly_us/
-inputs/jhu/testing/
+inputs/bts/Origin_and_Destination_Survey*
