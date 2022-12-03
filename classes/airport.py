@@ -19,7 +19,7 @@ class Airport:
         self.node_id = None # assigned in process_inputs/build_nodes.py
 
     def __repr__(self):
-        return f'Airport({self.locid}; name: {self.name}; location: {self.city}, {self.state}; hub: {self.hub}; enplaned: {self.enplaned}; cbsa: {self.cbsa_code}, fips: {self.fips_code}, node id: {self.node_id}\n'
+        return f'Airport - locid: {self.locid}; name: {self.name}; city: {self.city}, state: {self.state}; hub: {self.hub}; enplaned: {self.enplaned}; cbsa: {self.cbsa_code}, fips: {self.fips_code}, node id: {self.node_id}\n'
 
     @classmethod
     def by_state(cls, state):

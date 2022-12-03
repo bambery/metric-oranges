@@ -2,6 +2,4 @@
 *.swo
 **/__pycache__/
 *:Zone.Identifier
-misc/
-inputs/census/*/*
 inputs/bts/Origin_and_Destination_Survey*

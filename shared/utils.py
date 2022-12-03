@@ -8,6 +8,10 @@ def get_inputs_dir() -> Path:
     root = get_project_root()
     return root.joinpath("inputs")
 
+def get_outputs_dir() -> Path:
+    root = get_project_root()
+    return root.joinpath("outputs")
+
 def get_class_dir() -> Path:
     root = get_project_root()
     return root.joinpath("classes")

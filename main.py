@@ -6,6 +6,7 @@ import process_inputs.build_nodes as bn
 import process_inputs.jhu as jhu
 import process_inputs.adjacency_edges as adje
 import process_inputs.flight_edges as fled
+import process_outputs.process_outputs as po
 
 from classes.node import Node
 from classes.fips import Fips
@@ -28,7 +29,7 @@ place_cbsa = fpc.build_fips_maps()
 # 4 - airports
 # link airports to CBSAs and FIPS
 airports = air.process_airports(place_cbsa)
-del place_cbsa # need to check if there are other references out there - this file is only used to process airports
+del place_cbsa
 
 # 5 - construct Nodes by CBSA for counties that have them, or by FIPS for those without
 bn.process_fips_for_nodes()
@@ -41,6 +42,13 @@ adje.build_edges()
 
 #8 - build flight routes
 fled.process_flight_edges()
+
+#9 write airport reports
+#po.generate_airport_report()
+#po.generate_airport_edge_report()
+#po.generate_fips_report()
+po.generate_node_report()
+po.generate_node_covid_report()
 
 print("you are in main")
 breakpoint()

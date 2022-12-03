@@ -1,11 +1,14 @@
-health_districts_fips.txt
-- I made this file myself from the information posted at https://ibis.health.utah.gov/ibisph-view/about/LocalHealth.html, combined with the FIPS mappings from census/county_fips/all-geocodes-v2020.xlsx. I was not able to find this data in a downloadable form or table.
+___ UTAH_IBIS ___
+
+utah_ibis/health_districts_fips.txt
+- Lauren Wszolek generated this file from the information posted at https://ibis.health.utah.gov/ibisph-view/about/LocalHealth.html, combined with the FIPS mappings from census/county_fips/all-geocodes-v2020.xlsx. I was not able to find this data in a downloadable form or table.
+- updated note: there is now a US 2020 census population by FIPS report located in /inputs/census/population_census_US/
 - columns:
     0: name of health district
     1: fips of county contained in health district
     2: name of county
 
-******* unused*********
+******* unused & not included *********
 *
 * this file has been removed, but I did look at it. As it does not use census data and uses estimates, I opted to not use this file and stick to the actual counts of the 2020 census
 * Density.xls
