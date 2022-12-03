@@ -1,0 +1,89 @@
+___OUTPUTS___
+
+/outputs/airport_edges.csv
+
+description:
+- This file is a undirected record of all flights between airports
+- Each row represents a flight route between two airports. The routes are not directed
+- Each airport is given by LocID
+- Only airports tracked in this project, IE NPIAS Hub-ranked airports, are included
+- The data was derived from the four quarterly reports of 2019 in the Origin Destination DB1B survey
+- This file was generated from the script in /process_inputs/_db1b_origin_destination.py - please see this file, as well as /inputs/bts/origin_dest/contents.txt for additional details.
+
+columns:
+    0: LOCID Origin
+    1: LOCID Destination
+
+
+/outputs/airports.csv
+
+description:
+- This file is a record of all NPIAS Hub-ranked airports in the 50 US states.
+
+columns:
+    0: LOCID - unique identifier for the airport
+    1: Airport Name - public airport name
+    2: City - city airport exists in
+    3: State - state airport exists in
+    4: NPIAS Hub Designation - Large, Medium, Small, or Non-Hub. See large report for more details
+    5: CBSA Code - present if this airport resides in a CBSA
+    6: FIPS Code - if present, the FIPS code that this airport resides in or next to. This code should be consiered less reliable if a CBSA is present.
+    7: Node ID - Node that this airport belongs to
+    8: Destinations - list of LocIDs of airports connected by a flight route.
+
+
+/outputs/cbsa.csv
+
+description:
+- This file is a record of all CBSAs in the US as of the 2020 Census (there will be changes coming in 2023 from the OMB).
+
+columns:
+    0: CBSA Code - issued by the OMB to uniquely identify a CBSA
+    1: Node ID - a unique identifier for this project
+    2: Name - issued by the OMB, generally a combination of included counties and spanning states
+    3: MSA Designation - whether this CBSA represents a Micropolitan or Metropolitan region (unused by project) - more information on this can be found at this link: https://www.federalregister.gov/documents/2021/07/16/2021-15159/2020-standards-for-delineating-core-based-statistical-areas#p-86
+    4: Airports - list of Aiports contained in this CBSA by LocID, separated by "|"
+    5: FIPS Codes - list of FIPS codes contained in this CBSA
+
+
+/outputs/fips.csv
+
+decription:
+- This file is a record of all FIPS in the US as of the 2020 census.
+
+columns:
+    0: FIPS Code - unique five digit code for this FIPS. The first two digits are the state code, the next three digits are the county code
+    1: Node ID - assigned by this project, the Node ID associated with this FIPS
+    2: Name - official name of this FIPS (generally county name)
+    3: State - state where the FIPS resides
+    4: CBSA Code - populated if this FIPS is associated with a CBSA
+    5: Airports - list of airports in this FIPS. This field will ONLY be populated if the airport does NOT reside in a CBSA - otherwise the airports are assigned to the CBSA and not the FIPS.
+    6: Adjacent FIPS Codes - a list of FIPS Codes which are geographically adjacent to this FIPS, separated by "|"
+    7: Adjacent Node IDs - mostly for informative value, a list of the Nodes which are adjacent to this FIPS's parent Node.
+
+
+/outputs/nodes.csv
+
+description:
+- This file represents the entire geographic area of the US 50 states divided into Nodes. A Node is either a CBSA, made up of a collection of geographically adjacent FIPS, or a single FIPS which does not have strong ties to its surrounding regions. There are 2,229 Nodes in the US representing 927 CBSAs and 1,302 individual FIPS. Note that many CBSAs represent only one county and therefore only have one FIPS assigned. Deaths are attached to Nodes in the file /outputs/weekly_covid_by_node.csv. Collected here are all airports present in a Node, all destination airports reachable by flights from the Node's
+
+columns:
+    0: Node ID - unique identifier for a Node issued by this project
+    1: Name - if the Node represents a CBSA, the official OMB issued name is given. Otherwise, the name is: the name oof the FIPS + _ + state for FIPS code
+    2: CBSA Code - if the Node represents a CBSA
+    3: FIPS Codes - list of all 5 digit FIPS codes that exist in this Node, separated by "|". If this Node is a CBSA, there will often be more than one code, however some CBSAs enclose a single FIPS code. If the Node is a FIPS, there will be only one code.
+    4: Airports - list of LocIDs of airports contained in this Node, separated by "|"
+    5: Edge Node IDs (All) - list of all Node IDs with edges to this Node. A combination of all edges to this Node
+    6: Edge Nodes by Geographic Adjacency - list of all Node IDs adjacent to this one
+    7: Edge Nodes by Flight - list of all Node IDs linked to this Node by a flight route from a contained airport to another airport
+
+
+/outputs/weekly_covid_by_node.csv
+
+description:
+- This file is a weekly breakdown of reported COVID-19 deaths by Node. Note that there are occasional negative numbers given in a column. This is known and due to adjustments in data over time, though there remain some outstanding issues. There is some additional information in the long report. While reports technically exist from 2022-01-01, actual reporting on data did not begin until approximately 2020-04-01. The output file contains data from the default dates ranging from 2020-10-01 until 2022-08-01, but any date from 2020-01-02 until today can be passed in to generate new reports. Weeks always begin on Sunday.
+
+columns:
+    0: Node ID
+    1: Week Start - date of the start of week (Sunday) for recorded deaths in format YYYY-MM-DD
+    2: total new deaths reported for this week.
