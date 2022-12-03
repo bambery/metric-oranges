@@ -1,4 +1,4 @@
-____census____
+____CENSUS____
 
 county_adjacency_2010/county_adjacency.txt
 
@@ -14,6 +14,18 @@ county_adjacency_2010/county_adjacency.txt
     2: county name, county state that is adjacent to county in columns 0 and 1
     3: FIPS for county in col 2
 - notes: this file is ancient and has many problems which need to be manually fixed. At time of writing, no more current version exists (I asked), but later in 2023 it should be made available.
+
+
+county_adjacency/adjacency_edges_to_be_deleted.csv
+
+- description: list of edges between Nodes (directionless) which are suggested to be removed from epidemiological adjacency maps. 
+- link: https://www2.census.gov/geo/maps/metroarea/us_wall/Mar2020/CBSA_WallMap_Mar2020.pdf
+- This file was created by Lauren Wszolek by visually inspecting maps of the FIPS and CBSA designations of the counties, and making a note when FIPS a "neighbor" is actually across a body of water with no land borders. This happens because the FIPS maps are sometimes drawn to extend into bodies of water, such as Lake Michigan. See the link for a map showing the CBSA/FIPS borders which shows how problematic the Great Lakes are.
+This list is not exhaustive, since there are many water borders along the coasts, but I have made note of the most egregious examples where the offending counties are not within a short drive of one another, and are often separated by many miles across water. Please see the larger report for additional details.
+- columns:
+	0: FIPS code of first
+	1: FIPS code of second
+- note: I did *not* actually remove these edges from the edge lists - they are merely a suggestion for the future.
 
 
 county_fips/all_geocodes_v2020.xlsx

@@ -6,7 +6,6 @@ import process_inputs.build_nodes as bn
 import process_inputs.jhu as jhu
 import process_inputs.adjacency_edges as adje
 import process_inputs.flight_edges as fled
-
 import process_outputs.process_outputs as po
 
 from classes.node import Node
@@ -45,7 +44,11 @@ adje.build_edges()
 fled.process_flight_edges()
 
 #9 write airport reports
-po.generate_airport_report()
+#po.generate_airport_report()
+#po.generate_airport_edge_report()
+#po.generate_fips_report()
+po.generate_node_report()
+po.generate_node_covid_report()
 
 print("you are in main")
 breakpoint()
