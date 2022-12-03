@@ -35,6 +35,8 @@ del place_cbsa
 bn.process_fips_for_nodes()
 
 # 6 - process JHU daily files into weekly reports
+# may optionally pass in start and end dates with:
+#     create_weekly_counts(start_date_str='YYYY-MM-DD', end_date_str='YYYY-MM-DD')
 jhu.create_weekly_counts()
 
 # 7 - process county adjacencies
@@ -43,10 +45,10 @@ adje.build_edges()
 #8 - build flight routes
 fled.process_flight_edges()
 
-#9 write airport reports
-#po.generate_airport_report()
-#po.generate_airport_edge_report()
-#po.generate_fips_report()
+#9 write out reports
+po.generate_airport_report()
+po.generate_airport_edge_report()
+po.generate_fips_report()
 po.generate_node_report()
 po.generate_node_covid_report()
 
