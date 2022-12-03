@@ -1,11 +1,39 @@
+____bts___
+
+**** this file is not present ***
+It is too large to check in. It can be downloaded from
 Origin_and_Destination_Survey_DB1BMarkey_2019_3.csv
 
 I was lucky and able to actually download a report. Most of the time it fails to download.
 bts/db1bMarket/
 
-page (click on tiny "download" in the "DB1BMarket" row):https://www.transtats.bts.gov/Tables.asp?QO_VQ=EFI&QO_anzr=Nv4yv0r%FDb4vtv0%FDn0q%FDQr56v0n6v10%FDf748rB%FD%FLQOEO%FM&QO_fu146_anzr=b4vtv0%FDn0q%FDQr56v0n6v10%FDf748rB
+page (click on tiny "download" in the "DB1BMarket" row): https://www.transtats.bts.gov/Tables.asp?QO_VQ=EFI&QO_anzr=Nv4yv0r%FDb4vtv0%FDn0q%FDQr56v0n6v10%FDf748rB%FD%FLQOEO%FM&QO_fu146_anzr=b4vtv0%FDn0q%FDQr56v0n6v10%FDf748rB
+
 link: you can ONLY download a prezipped file for a year and quarter.
 
 I wish I could find any definition for the "db1b product" downloaded from here:
 https://www.bts.gov/topics/airlines-and-airports/origin-and-destination-survey-data
 However, I could not and I was not able to get any answers about this from the BTS, whom I did contact several times asking about this. It does not correlate to any of the DB1B table definitions I could find.
+
+This report, along with the three other quarters of 2019, was used to generate a list of flight routes - ie a route between two airports. I combined all of the routes described in all 4 quarters, stripping them of everything except "Origin" and "Dest" - the locid of the origin airport and locid of the destination airport respectively. Other than only using these columns, these airports are not filtered in any way from the DB1B reports.
+
+There is a form to filter the report, but I have never been able to get it to work, and therefore needed to use the full DB1B Market report. The report came with its own table definition which is contained in this folder named "readme.html", which may be checked for more information about the contents of the DB1B.
+
+****
+
+The below reports were generated with the file /process_imputs/_db1b_origin_destination.py
+
+****
+
+origin-dest/db1b_origin_dest_q*.csv
+
+- Lauren Wszolek generated this file from the DB1B full report
+- description: the 2019 DB1B report from q*, stripped of all data except Origin and Destination locid airport codes. It has not been deduped and the flights are directional.
+
+origin-dest/2019_directionless_flight_routes.csv
+
+
+- Lauren Wszolek generated this file from the 4 2019 quarterly reports
+- description: All flight routes from all 4 quarters have been deduped and are no longer directional. This is a directionless set of all flight routes from the DB1B reports.
+
+Of note: Even though I ran all 4 quarters, Q1, Q2, and Q4 contained no unique directionless routes, so running Q3 would have been sufficient.

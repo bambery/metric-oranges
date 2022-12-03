@@ -1,18 +1,7 @@
-____Census____
+____census____
 
-county_fips/all_geocodes_v2020.xlsx
-- encoding: first 10 chars look like b'PK\x03\x04\x14\x00\x06\x00\x08\x00', so 2010 xlsx
-- library required: openpyxl
-- accessed: 11/27/22
-- page: https://www.census.gov/geographies/reference-files/2020/demo/popest/2020-fips.html
-- link: https://www2.census.gov/programs-surveys/popest/geographies/2020/all-geocodes-v2020.xlsx
-- description: current FIPS codes
-- columns used:
-    1: state fips code
-    2: county fips code
-    6: county/etc name
+county_adjacency_2010/county_adjacency.txt
 
-county_adjacency_2010:
 - encoding: windows encoded txt file, windows-1252
 - library required: csv
 - accessed: 8/22/2022
@@ -24,10 +13,25 @@ county_adjacency_2010:
     1: county FIPS
     2: county name, county state that is adjacent to county in columns 0 and 1
     3: FIPS for county in col 2
-- addl notes: need to ignore FIPS for US territories
+- notes: this file is ancient and has many problems which need to be manually fixed. At time of writing, no more current version exists (I asked), but later in 2023 it should be made available.
 
 
-list1/list1_2020:
+county_fips/all_geocodes_v2020.xlsx
+
+- encoding: first 10 chars look like b'PK\x03\x04\x14\x00\x06\x00\x08\x00', so 2010 xlsx
+- library required: openpyxl
+- accessed: 11/27/22
+- page: https://www.census.gov/geographies/reference-files/2020/demo/popest/2020-fips.html
+- link: https://www2.census.gov/programs-surveys/popest/geographies/2020/all-geocodes-v2020.xlsx
+- description: current FIPS codes
+- columns used:
+    1: state fips code
+    2: county fips code
+    6: county/etc name
+
+
+list1/list1_2020.xls
+
 - type: xls file in MS OLE2 encoding from Excel 97
 - library required: xlrd, pandas
 - accessed: 11/27/22
@@ -43,9 +47,10 @@ list1/list1_2020:
     9: FIPS state code
     10: FIPS county code
     11: Central/Outlying (not used currently)
-- addl notes:
+
 
 place_cbsa/place05-cbsa06.xls:
+
 - type: ancient 2008 xls file
 - accessed:
 - page: https://www.census.gov/programs-surveys/metro-micro/technical-documentation/file-layouts/05-place-to-06-cbsa.html
@@ -58,23 +63,31 @@ place_cbsa/place05-cbsa06.xls:
     4: County FIPS
     5: CBSA code
     6: CBSA title
-- addl notes: this file is from 2006, and there have been many changes since then to FIPS and CBSAs. A lot of manual work was required in the processing file to try and accommodate the changes.
+- notes: this file is from 2006, and there have been many changes since then to FIPS and CBSAs. A lot of manual work was required in the processing file to try and accommodate the changes. Also, this file came with its own documentation. See place_cbsa/place-cbsa-doc.txt
 
-link to file layout doc: https://www2.census.gov/programs-surveys/popest/technical-documentation/file-layouts/2020-2021/CO-EST2021-ALLDATA.pdf
-link to file: https://www2.census.gov/programs-surveys/popest/datasets/2020-2021/counties/totals/co-est2021-alldata.csv
-I do not know if this report is obtainable by the UI. I could not find it and only discovered it by accident.
-- this contains the populations by county for the 2020 census.
 
 utah_2020_census/co-est2021-pop-49.xlsx:
-- type:
+
 - accessed: 8/22/22
 - page: https://www.census.gov/data/datasets/time-series/demo/popest/2020s-counties-total.html#par_textimage_739801612
 - link: https://www2.census.gov/programs-surveys/popest/tables/2020-2021/counties/totals/co-est2021-pop-49.xlsx
 - description: used to estimate actual COVID spread for Utah in death counts - Utah does not publish deaths by FIPS alone out of every state.
-- columns:
+
+
+********** file is unused ***
+population_census_us/co-est2020.csv
+
+- library required:
+- page: as far as I could tell, this report was not accessible via the UI. I discovered it through URL spelunking out of desperation.
+- link to file layout doc: https://www2.census.gov/programs-surveys/popest/technical-documentation/file-layouts/2020-2021/CO-EST2021-ALLDATA.pdf
+- link to file: https://www2.census.gov/programs-surveys/popest/datasets/2020-2021/counties/totals/co-est2021-alldata.csv
+- description: census 2020 by state by FIPS
+- note: I did not find a 2020 census population file linking populations with FIPS until very late, and instead needed to rely on manual work and hacks to accommodate Hamilton's method in /process_inputs/jhu.py. This file is included because it is difficult to locate and it may be useful if deciding to integrate additional deaths aside from those reported, or other adjustments, in the future.
+
 
 ****** old, replaced by all-geocodes-v2020, used for comparison analysis but not data generation ***********
-county_fips:
+county_fips/national_county.txt
+
 - type: txt file
 - accessed: 8/23/2022
 - page: none, cannot access through UI that I could find
@@ -86,4 +99,4 @@ county_fips:
     2: last 3 digits of FIPS (county code)
     3: county name
     4: county type code
-- addl notes: has an updated timestamp of 2014, but it is unknown precisely what year this represents as this file is not accessible through the interface, only URL manipulation
+- addl notes: has an updated timestamp of 2014, but it is unknown precisely what year this represents as this file is not accessible through the interface, only URL manipulation. However, this is the only version of the file which appears to be currently accessible on the census website (UPDATE: located another more recent version, replacing this file)

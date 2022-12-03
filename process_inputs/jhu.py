@@ -17,6 +17,7 @@ inputs = utils.get_inputs_dir()
 file_jhu_time_series = inputs.joinpath("jhu", "COVID-19", "csse_covid_19_data", "csse_covid_19_time_series", "time_series_covid19_deaths_US.csv")
 
 # I found a 2020 population by county with FIPS file, too late, which would be better to read in to get all county pops, to replace this little process. Alas.
+# See contents.txt in /inputs/census/ or the 2020 pop file at /inputs/population_census_US/co-est2020.csv
 ut_hd_fips, ut_hd_populations = uea.process_files()
 ma_hd_fips = {'Dukes and Nantucket': {'25007': 20600, '25019': 14255 }}
 ma_hd_populations = {'Dukes and Nantucket': 34855 }

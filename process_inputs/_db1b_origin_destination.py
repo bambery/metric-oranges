@@ -21,7 +21,7 @@ dest_dir = inputs.joinpath("bts", "origin_dest")
 file_path_db1b_2019_q4 = inputs.joinpath("bts", "Origin_and_Destination_Survey_DB1BMarket_2019_4.csv")
 file_path_output_q4 = "db1b_origin_dest_q4.csv"
 
-# This output file is not directional, and it encompasses all lsted Airports, without checking if they are hub-rated.
+# This output file is not directional, and it encompasses all airports in the DB1B, without checking if they are hub-rated.
 
 def process_flight_edges(db1b_2019_quarter, output_file):
     quarterly_flights = set()

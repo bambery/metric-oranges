@@ -65,7 +65,7 @@ class Node:
         return cls.collection.get(id_)
 
     def adj_nodes_names(self):
-        return [Node.get(n).name for n in self.edges_adjacent]
+        return [str(n) + ": " + str(Node.get(n).name) for n in self.edges_adjacent]
 
     def edges(self):
         return self.edges_adjacent.union(self.edges_flights)
